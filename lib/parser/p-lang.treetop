@@ -1,0 +1,143 @@
+grammar PLang
+
+  rule statements
+    (spaces? statement spaces?)*
+  end
+  
+  rule statement
+    binop / let / expr
+  end
+  
+  rule let
+    var spaces? '=' spaces? statement
+  end
+  
+  rule var
+    id / object
+  end
+  
+  rule binop
+    sum / sub / mul / div / mod
+  end
+  
+  rule sum
+	  expr spaces? '+' spaces? statement
+  end
+  
+  rule sub
+	  expr spaces? '-' spaces? statement
+  end
+  
+  rule mul
+	  expr spaces? '*' spaces? statement
+  end
+  
+  rule div
+	  expr spaces? '/' spaces? statement
+  end
+  
+  rule mod
+	  expr spaces? '%' spaces? statement
+  end
+  
+  rule call
+    (id / lambda) spaces? '(' spaces? call_params? spaces? ')'
+  end
+  
+  rule call_params
+    statement spaces? call_params? / (spaces? ',' spaces? statement)+
+  end
+  
+  rule expr
+	  number / call / id / object / char / string / lambda / '(' spaces? statement spaces? ')'
+  end
+  
+  rule  statement_list
+    statement spaces?  statement_list? / (spaces? ',' spaces? statement)+
+  end
+  
+  rule lambda
+    '[' spaces? lambda_params? spaces? statement spaces? ']'
+  end
+  
+  rule lambda_params
+    lambda_params_list spaces? '|'
+  end
+  
+  rule lambda_params_list
+	  form spaces? lambda_params_list? / (spaces? ',' spaces? form)+
+  end
+  
+  rule form
+	  number / id / object_form / char / string
+  end
+  
+  rule object_form
+    '{' spaces? id spaces? object_form_list? spaces? '}'
+  end
+  
+  rule object_form_list
+    ':' spaces? lambda_params_list
+  end
+  
+  rule object
+	  '{' spaces? id spaces? object_list? spaces? '}'
+  end
+  
+  rule object_list
+    ':' spaces?  statement_list
+  end
+  
+  rule id
+    [a-zA-Z_0-9]+
+  end
+  
+  rule string
+    "\"" (!"\"" .)* "\""
+  end
+  
+  rule char
+    "'" (!"'" .) "'"
+  end
+
+  rule number
+	  decimal / integer
+  end
+  
+  rule decimal
+	  sign? spaces? digits? dot digits
+  end
+  
+  rule integer
+	  sign? spaces? digits
+  end
+  
+  rule digits
+	  digit+
+  end
+  
+  rule digit
+	  [0-9]
+  end
+  
+  rule sign
+    "-"
+  end
+  
+  rule dot
+	  "."
+  end
+  
+  rule spaces
+    space* ("#" (!break .)* break+ space*)*
+  end
+  
+  rule space
+    [\r\n\t\s]
+  end
+  
+  rule break
+    [\r\n]
+  end
+  
+end
