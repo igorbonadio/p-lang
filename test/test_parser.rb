@@ -3,25 +3,21 @@ require 'helper'
 class TestParser < Test::Unit::TestCase
   
   def self.get_src(filename)
-    File.open(File.expand_path(File.dirname(__FILE__)) + "/p-lang/" + filename, 'r').readlines.join + "\n"
+    File.open(File.expand_path(File.dirname(__FILE__)) + "/" + filename, 'r').readlines
   end
   
-  def self.should_parse_programs
-    context "The PLangParser" do
-      setup do
-        @parser = PLangParser.new
-      end
-      
-      Dir.new(File.expand_path(File.dirname(__FILE__)) + '/p-lang/parser-ok').each do |f|
-        if f[-1..-1] == 'p'
-          should "parse #{f} program" do
-            assert @parser.parse(TestParser::get_src("parser-ok/" + f))
-          end
-        end
+  context "The PLangParser" do
+    setup do
+      @parser = PLangParser.new
+    end
+    
+    i = 0
+    TestParser::get_src('test_parser_ok.txt').each do |expr|
+      i = i + 1
+      should "parse the expression ##{i}" do
+        assert @parser.parse expr
       end
     end
   end
   
-  should_parse_programs
-    
 end
