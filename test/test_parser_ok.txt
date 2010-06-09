@@ -1,5 +1,5 @@
 x = 1+2+3+4
-y = 1+2*x
+y = 1+2*x/2
 fibonacci = [1| 1]
 fibonacci = [2| 1]
 fibonacci = [n| fibonacci(n-1)+fibonacci(n-2)]
@@ -29,3 +29,5 @@ x>=1
 4==1
 2<x
 if(x>1, "verdadeiro", "falso")
+f = [x| f(x) + g(x)] : (f = [x| x*x], g = [x| x/2])
+f = [x| y] : (y = 2*x)

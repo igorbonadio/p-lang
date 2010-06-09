@@ -21,7 +21,7 @@ grammar PLang
   end
 
   rule op
-    '+' / '-' / '*' / '\\' / '%' / '>=' / '<=' / '>' / '<' / '=='
+    '+' / '-' / '*' / '/' / '%' / '>=' / '<=' / '>' / '<' / '=='
   end
 
   rule begin
@@ -51,9 +51,17 @@ grammar PLang
   end
   
   rule lambda
-    '[' spaces? lambda_params? spaces? statement spaces? ']'
+    '[' spaces? lambda_params? spaces? statement spaces? ']' spaces? where?
   end
   
+  rule where
+    ':' spaces? '(' spaces? where_params spaces? ')'
+  end
+
+  rule where_params
+    let spaces? where_params? / (spaces? ',' spaces? let)+
+  end
+
   rule lambda_params
     lambda_params_list spaces? '|'
   end
