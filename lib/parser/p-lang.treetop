@@ -39,8 +39,13 @@ grammar PLang
   rule mod
 	  expr spaces? '%' spaces? statement
   end
-  
+
+  rule begin
+    'begin' spaces? '(' spaces? call_params? spaces? ')'
+  end  
+
   rule call
+    begin /
     (id / lambda) spaces? '(' spaces? call_params? spaces? ')'
   end
   
