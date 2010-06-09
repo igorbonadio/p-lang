@@ -23,3 +23,9 @@ pointsum(p1, p2) # => {point: 4, 6}
 sum = [ a, b| a + b]
 sum(1, 2) # => 3
 f = [x| begin(algo=x, algo*algo, algo)]
+1>2
+x>=1
+2<=b
+4==1
+2<x
+if(x>1, "verdadeiro", "falso")

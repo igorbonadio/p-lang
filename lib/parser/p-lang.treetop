@@ -17,35 +17,24 @@ grammar PLang
   end
   
   rule binop
-    sum / sub / mul / div / mod
+    expr spaces? op spaces? statement
   end
-  
-  rule sum
-	  expr spaces? '+' spaces? statement
-  end
-  
-  rule sub
-	  expr spaces? '-' spaces? statement
-  end
-  
-  rule mul
-	  expr spaces? '*' spaces? statement
-  end
-  
-  rule div
-	  expr spaces? '/' spaces? statement
-  end
-  
-  rule mod
-	  expr spaces? '%' spaces? statement
+
+  rule op
+    '+' / '-' / '*' / '\\' / '%' / '>=' / '<=' / '>' / '<' / '=='
   end
 
   rule begin
     'begin' spaces? '(' spaces? call_params? spaces? ')'
-  end  
+  end
+
+  rule if
+    'if' spaces? '(' spaces? statement spaces? ',' statement spaces? ',' statement spaces? ')'
+  end
 
   rule call
     begin /
+    if /
     (id / lambda) spaces? '(' spaces? call_params? spaces? ')'
   end
   
