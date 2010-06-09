@@ -12,10 +12,10 @@ class TestParser < Test::Unit::TestCase
         @parser = PLangParser.new
       end
       
-      Dir.new(File.expand_path(File.dirname(__FILE__)) + '/p-lang/ok').each do |f|
+      Dir.new(File.expand_path(File.dirname(__FILE__)) + '/p-lang/parser-ok').each do |f|
         if f[-1..-1] == 'p'
           should "parse #{f} program" do
-            assert @parser.parse(TestParser::get_src("ok/" + f))
+            assert @parser.parse(TestParser::get_src("parser-ok/" + f))
           end
         end
       end

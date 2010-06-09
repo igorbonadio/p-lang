@@ -23,3 +23,8 @@ pointx(p2) # => 3
 pointy(p2) # => 4
 
 pointsum(p1, p2) # => {point: 4, 6}
+
+# obj constructions :
+{obj: 1+2, x=1}
+{obj: 1, 2}
+{obj: x, 2, 'a', "aaaa", {other}}
