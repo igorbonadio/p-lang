@@ -5,11 +5,16 @@ grammar PLang
   end
   
   rule statement
-    binop / let / expr
+    binop / let / object_call / expr
+  end
+
+  rule object_call
+    expr spaces? '->' spaces? id sspaces? '(' spaces? call_params? spaces? ')'
   end
   
   rule let
-    var spaces? '=' spaces? statement
+    var spaces? '=' spaces? statement /
+    object_form spaces? '->' spaces? var spaces? '=' spaces? statement
   end
   
   rule var
@@ -35,7 +40,11 @@ grammar PLang
   rule call
     begin /
     if /
-    (id / lambda) spaces? '(' spaces? call_params? spaces? ')'
+    (id / lambda) sspaces? '(' spaces? call_params? spaces? ')'
+  end
+
+  rule sspaces
+    [\s\t]*
   end
   
   rule call_params
