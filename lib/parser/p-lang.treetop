@@ -9,7 +9,8 @@ grammar PLang
   end
 
   rule object_call
-    expr spaces? '->' spaces? id sspaces? '(' spaces? call_params? spaces? ')'
+    expr spaces? '->' spaces? id sspaces? '(' spaces? call_params? spaces? ')' /
+    expr spaces? '->' spaces? id spaces?
   end
   
   rule let

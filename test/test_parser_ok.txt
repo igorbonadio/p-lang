@@ -31,9 +31,11 @@ x>=1
 if(x>1, "verdadeiro", "falso")
 f = [x| f(x) + g(x)] : (f = [x| x*x], g = [x| x/2])
 f = [x| y] : (y = 2*x)
+{aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])
 {algo: x, y}->algo = [x| x]
 {algo} -> algo = 1
 f(1)->algo(1)
 x->algo()
 10->algo(1,2,3)
 {algo: 1, 2} -> algo()
+{algo: x, y} -> x()
