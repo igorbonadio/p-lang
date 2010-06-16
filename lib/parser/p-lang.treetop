@@ -1,7 +1,7 @@
 grammar PLang
 
   rule statements
-    (spaces? statement spaces?)*
+    (spaces? statement spaces?)* <NStatements>
   end
   
   rule statement
@@ -23,11 +23,11 @@ grammar PLang
   end
   
   rule binop
-    expr spaces? op spaces? statement
+    expr spaces? op spaces? statement <NBinOp>
   end
 
   rule op
-    '+' / '-' / '*' / '/' / '%' / '>=' / '<=' / '>' / '<' / '=='
+    '+' / '-' / '*' / '/' / '%' / '>=' / '<=' / '>' / '<' / '==' 
   end
 
   rule begin
@@ -53,10 +53,14 @@ grammar PLang
   end
   
   rule expr
-	  number / call / id / object / char / string / lambda / '(' spaces? statement spaces? ')'
+	number / call / id / object / char / string / lambda / parem_expr
+  end
+
+  rule parem_expr
+    '(' spaces? statement spaces? ')' <NParemExpr>
   end
   
-  rule  statement_list
+  rule statement_list
     statement spaces?  statement_list? / (spaces? ',' spaces? statement)+
   end
   
@@ -121,7 +125,7 @@ grammar PLang
   end
   
   rule integer
-	  sign? spaces? digits
+	  sign? spaces? digits <NInteger>
   end
   
   rule digits
