@@ -24,6 +24,18 @@ module PLang
     end
   end
 
+  module NString
+    def build
+      Ast::PLiteral.new(:string, str.text_value)
+    end
+  end
+
+  module NChar
+    def build
+      Ast::PLiteral.new(:char, c.text_value)
+    end
+  end
+
   module NId
     def build
       Ast::PId.new(text_value)

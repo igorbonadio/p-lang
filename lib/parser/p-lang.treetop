@@ -109,11 +109,11 @@ grammar PLang
   end
   
   rule string
-    "\"" (!"\"" .)* "\""
+    "\"" str:(!"\"" .)* "\"" <NString>
   end
   
   rule char
-    "'" (!"'" .) "'"
+    "'" c:(!"'" .) "'" <NChar>
   end
 
   rule number

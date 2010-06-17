@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "p-lang"
-    gem.summary = %Q{P language programming}
+    gem.summary = %Q{P programming language}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "igorbonadio@gmail.com"
     gem.homepage = "http://github.com/igorbonadio/p-lang"
