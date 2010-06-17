@@ -13,11 +13,13 @@ x>=1
 2<=b
 4==1
 2<x
+{obj}
+{obj: 1, 2, 3}
+{obj: 1+2, x}
+{obj: 1, 2}
+{obj: x, 2, {other}}
 x = 1+2+3+4
 y = 1+2*x/2
-{obj: 1+2, x=1}
-{obj: 1, 2}
-{obj: x, 2, 'a', "aaaa", {other}}
 fibonacci = [1| 1]
 fibonacci = [2| 1]
 fibonacci = [n| fibonacci(n-1)+fibonacci(n-2)]

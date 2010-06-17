@@ -13,4 +13,8 @@
 [[:<=, [:literal, :integer, 2], [:id, :b]]]
 [[:==, [:literal, :integer, 4], [:literal, :integer, 1]]]
 [[:<, [:literal, :integer, 2], [:id, :x]]]
-
+[[:object, :obj, []]]
+[[:object, :obj, [[:literal, :integer, 1], [:literal, :integer, 2], [:literal, :integer, 3]]]]
+[[:object,:obj,[[:+, [:literal, :integer, 1], [:literal, :integer, 2]], [:id, :x]]]]
+[[:object, :obj, [[:literal, :integer, 1], [:literal, :integer, 2]]]]
+[[:object, :obj, [[:id, :x], [:literal, :integer, 2], [:object, :other, []]]]]

@@ -61,7 +61,7 @@ grammar PLang
   end
   
   rule statement_list
-    statement spaces?  statement_list? / (spaces? ',' spaces? statement)+
+    statement spaces?  stm_list:statement_list? / (spaces? ',' spaces? statement)+ 
   end
   
   rule lambda
@@ -97,11 +97,11 @@ grammar PLang
   end
   
   rule object
-	  '{' spaces? id spaces? object_list? spaces? '}'
+	  '{' spaces? id spaces? obj_list:object_list? spaces? '}' <NObject>
   end
   
   rule object_list
-    ':' spaces?  statement_list
+    ':' spaces?  statement_list <NObjectList>
   end
   
   rule id

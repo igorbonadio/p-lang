@@ -1,5 +1,5 @@
 module Ast
-  class Statement
+  class PStatement
     def initialize(expression)
       @expression = expression
     end
@@ -9,7 +9,7 @@ module Ast
     end
   end
 
-  class BinOp
+  class PBinOp
     attr_reader :op
     attr_reader :left
     attr_reader :right
@@ -25,7 +25,7 @@ module Ast
     end
   end
 
-  class Literal
+  class PLiteral
     attr_reader :type
     attr_reader :value
 
@@ -39,7 +39,7 @@ module Ast
     end
   end
 
-  class Id
+  class PId
     attr_reader :name
 
     def initialize(name)
@@ -48,6 +48,19 @@ module Ast
 
     def to_sexp
       [:id, @name]
+    end
+  end
+
+  class PObject
+    attr_reader :name
+
+    def initialize(name, params)
+      @name = name.to_sym
+      @params = params.collect(&:to_sexp)
+    end
+
+    def to_sexp
+      [:object, @name, @params]
     end
   end
 end
