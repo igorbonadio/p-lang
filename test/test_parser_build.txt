@@ -7,4 +7,10 @@
 [[:*,[:+,[:literal, :integer, 1],[:literal, :integer, 6]],[:literal, :integer, 5]]]
 [[:+,[:literal, :integer, 1],[:/,[:*, [:literal, :integer, 2], [:literal, :integer, 3]],[:-, [:literal, :integer, 5], [:literal, :integer, 1]]]]]
 [[:+,  [:literal, :decimal, 1.3],[:*,[:literal, :integer, 5],[:+, [:literal, :integer, 1], [:literal, :decimal, 1.568]]]]]
+[[:id, :xyz]]
+[[:>, [:literal, :integer, 1], [:literal, :integer, 2]]]
+[[:>=, [:id, :x], [:literal, :integer, 1]]]
+[[:<=, [:literal, :integer, 2], [:id, :b]]]
+[[:==, [:literal, :integer, 4], [:literal, :integer, 1]]]
+[[:<, [:literal, :integer, 2], [:id, :x]]]
 

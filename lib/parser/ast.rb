@@ -38,4 +38,16 @@ module Ast
       [:literal, @type, @value]
     end
   end
+
+  class Id
+    attr_reader :name
+
+    def initialize(name)
+      @name = name.to_sym
+    end
+
+    def to_sexp
+      [:id, @name]
+    end
+  end
 end

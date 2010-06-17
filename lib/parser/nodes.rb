@@ -24,6 +24,12 @@ module PLang
     end
   end
 
+  module NId
+    def build
+      Ast::Id.new(text_value)
+    end
+  end
+
   module NParemExpr
     def build
       statement.build
