@@ -121,7 +121,7 @@ grammar PLang
   end
   
   rule decimal
-	  sign? spaces? digits? dot digits
+	  sign? spaces? digits? dot digits <NDecimal>
   end
   
   rule integer

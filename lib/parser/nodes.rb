@@ -18,6 +18,12 @@ module PLang
     end
   end
 
+  module NDecimal
+    def build
+      Ast::Literal.new(:decimal, text_value.to_f)
+    end
+  end
+
   module NParemExpr
     def build
       statement.build
