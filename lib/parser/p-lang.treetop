@@ -9,7 +9,7 @@ grammar PLang
   end
 
   rule object_call
-    expr spaces? '->' spaces? id sspaces? '(' spaces? call_params? spaces? ')' /
+    expr spaces? '->' spaces? id sspaces? '(' spaces? statement_list? spaces? ')' /
     expr spaces? '->' spaces? id spaces?
   end
   
@@ -30,26 +30,12 @@ grammar PLang
     '+' / '-' / '*' / '/' / '%' / '>=' / '<=' / '>' / '<' / '==' 
   end
 
-  rule begin
-    'begin' spaces? '(' spaces? call_params? spaces? ')'
-  end
-
-  rule if
-    'if' spaces? '(' spaces? statement spaces? ',' statement spaces? ',' statement spaces? ')'
-  end
-
   rule call
-    begin /
-    if /
-    (id / lambda) sspaces? '(' spaces? call_params? spaces? ')'
+    cid:(id / lambda) sspaces? '(' spaces? cparams:statement_list? spaces? ')' <NCall>
   end
 
   rule sspaces
     [\s\t]*
-  end
-  
-  rule call_params
-    statement spaces? call_params? / (spaces? ',' spaces? statement)+
   end
   
   rule expr

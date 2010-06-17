@@ -64,4 +64,15 @@ module PLang
     end
   end
 
+  module NCall
+    def build
+      params = [cparams.statement.build]
+      if cparams.stm_list.elements.respond_to?(:collect)
+        params |= cparams.stm_list.elements.collect { |element| element.statement.build }
+      end
+      Ast::PCall.new(cid.build, params)
+    end
+  end
+
 end
+

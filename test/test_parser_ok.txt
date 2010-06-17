@@ -20,6 +20,10 @@ x>=1
 {obj: x, 2, {other}}
 "teste"
 'a'
+if(x>1, "verdadeiro", "falso")
+begin(1+2+3, "oi", 2<3, 'a')
+sin(2*pi)-cos(2*pi)
+x = 1
 x = 1+2+3+4
 y = 1+2*x/2
 fibonacci = [1| 1]
@@ -42,7 +46,6 @@ pointsum(p1, p2) # => {point: 4, 6}
 sum = [ a, b| a + b]
 sum(1, 2) # => 3
 f = [x| begin(algo=x, algo*algo, algo)]
-if(x>1, "verdadeiro", "falso")
 f = [x| f(x) + g(x)] : (f = [x| x*x], g = [x| x/2])
 f = [x| y] : (y = 2*x)
 {aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])

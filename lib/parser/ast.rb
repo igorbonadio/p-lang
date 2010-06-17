@@ -56,11 +56,24 @@ module Ast
 
     def initialize(name, params)
       @name = name.to_sym
-      @params = params.collect(&:to_sexp)
+      @params = params
     end
 
     def to_sexp
-      [:object, @name, @params]
+      [:object, @name, @params.collect(&:to_sexp)]
+    end
+  end
+
+  class PCall
+    attr_reader :cid
+
+    def initialize(cid, params)
+      @cid = cid
+      @params = params
+    end
+
+    def to_sexp
+      [:call, @cid.to_sexp, @params.collect(&:to_sexp)]
     end
   end
 end

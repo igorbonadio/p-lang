@@ -20,4 +20,7 @@
 [[:object, :obj, [[:id, :x], [:literal, :integer, 2], [:object, :other, []]]]]
 [[:literal, :string, "teste"]]
 [[:literal, :char, "a"]]
+[[:call,[:id, :if],[[:>, [:id, :x], [:literal, :integer, 1]],[:literal, :string, "verdadeiro"],[:literal, :string, "falso"]]]]
+[[:call,[:id, :begin],[[:+,[:literal, :integer, 1],[:+, [:literal, :integer, 2], [:literal, :integer, 3]]],[:literal, :string, "oi"],[:<, [:literal, :integer, 2], [:literal, :integer, 3]],[:literal, :char, "a"]]]]
+[[:-,[:call, [:id, :sin], [[:*, [:literal, :integer, 2], [:id, :pi]]]],[:call, [:id, :cos], [[:*, [:literal, :integer, 2], [:id, :pi]]]]]]
 
