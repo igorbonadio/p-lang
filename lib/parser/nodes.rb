@@ -78,5 +78,11 @@ module PLang
     end
   end
 
+  module NVarLet
+    def build
+      Ast::PLet.new(var.build, statement.build)
+    end
+  end
+
 end
 

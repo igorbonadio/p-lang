@@ -24,4 +24,10 @@
 [[:call,[:id, :if],[[:>, [:id, :x], [:literal, :integer, 1]],[:literal, :string, "verdadeiro"],[:literal, :string, "falso"]]]]
 [[:call,[:id, :begin],[[:+,[:literal, :integer, 1],[:+, [:literal, :integer, 2], [:literal, :integer, 3]]],[:literal, :string, "oi"],[:<, [:literal, :integer, 2], [:literal, :integer, 3]],[:literal, :char, "a"]]]]
 [[:-,[:call, [:id, :sin], [[:*, [:literal, :integer, 2], [:id, :pi]]]],[:call, [:id, :cos], [[:*, [:literal, :integer, 2], [:id, :pi]]]]]]
-
+[[:let, [:id, :x], [:literal, :integer, 1]]]
+[[:let,[:id, :x],[:+,[:literal, :integer, 1],[:+,[:literal, :integer, 2],[:+, [:literal, :integer, 3], [:literal, :integer, 4]]]]]]
+[[:let,[:id, :y],[:+,[:literal, :integer, 1],[:*, [:literal, :integer, 2], [:/, [:id, :x], [:literal, :integer, 2]]]]]]
+[[:let, [:id, :str], [:literal, :string, "string"]]]
+[[:let,[:id, :p1],[:call, [:id, :point], [[:literal, :integer, 1], [:literal, :integer, 2]]]]]
+[[:let,[:object, :obj, [[:id, :x]]],[:object, :obj, [[:literal, :integer, 1]]]]]
+[[:let, [:object, :obj, [[:id, :x], [:id, :t]]], [:id, :obj]]]

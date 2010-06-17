@@ -14,7 +14,15 @@ grammar PLang
   end
   
   rule let
-    var spaces? '=' spaces? statement /
+    var_let /
+    obj_let
+  end
+
+  rule var_let
+    var spaces? '=' spaces? statement <NVarLet>
+  end
+
+  rule obj_let
     object_form spaces? '->' spaces? var spaces? '=' spaces? statement
   end
   

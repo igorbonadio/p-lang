@@ -76,4 +76,17 @@ module Ast
       [:call, @cid.to_sexp, @params.collect(&:to_sexp)]
     end
   end
+
+  class PLet
+    attr_reader :var
+    attr_reader :val
+    def initialize(var, val)
+      @var = var
+      @val = val
+    end
+
+    def to_sexp
+      [:let, @var.to_sexp, @val.to_sexp]
+    end
+  end
 end
