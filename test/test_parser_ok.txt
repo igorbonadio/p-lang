@@ -18,6 +18,7 @@ x>=1
 {obj: 1+2, x}
 {obj: 1, 2}
 {obj: x, 2, {other}}
+{obj: 1} 
 "teste"
 'a'
 if(x>1, "verdadeiro", "falso")

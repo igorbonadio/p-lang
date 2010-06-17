@@ -18,6 +18,7 @@
 [[:object,:obj,[[:+, [:literal, :integer, 1], [:literal, :integer, 2]], [:id, :x]]]]
 [[:object, :obj, [[:literal, :integer, 1], [:literal, :integer, 2]]]]
 [[:object, :obj, [[:id, :x], [:literal, :integer, 2], [:object, :other, []]]]]
+[[:object, :obj, [[:literal, :integer, 1]]]]
 [[:literal, :string, "teste"]]
 [[:literal, :char, "a"]]
 [[:call,[:id, :if],[[:>, [:id, :x], [:literal, :integer, 1]],[:literal, :string, "verdadeiro"],[:literal, :string, "falso"]]]]

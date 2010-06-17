@@ -54,7 +54,11 @@ module PLang
 
   module NObjectList
     def build
-      [statement_list.statement.build] | statement_list.stm_list.elements.collect { |element| element.statement.build }
+      obj_list = [statement_list.statement.build]
+      if statement_list.stm_list.elements.respond_to?(:collect) 
+        obj_list |= statement_list.stm_list.elements.collect { |element| element.statement.build }
+      end
+      obj_list
     end
   end
 
