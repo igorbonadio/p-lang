@@ -31,6 +31,11 @@ str = "string"
 p1 = point(1,2)
 {obj: x} = {obj: 1}
 {obj: x, t} = obj
+[x|x]
+[x,y| x+y]
+[1, 2, x, {obj: x, y}| 1]
+[x| y] : (y = [x| x+6])
+[x| y] : (y = [x| x+6], z = [x| x-6])
 fibonacci = [1| 1]
 fibonacci = [2| 1]
 fibonacci = [n| fibonacci(n-1)+fibonacci(n-2)]

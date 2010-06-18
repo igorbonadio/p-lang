@@ -80,6 +80,7 @@ module Ast
   class PLet
     attr_reader :var
     attr_reader :val
+
     def initialize(var, val)
       @var = var
       @val = val
@@ -87,6 +88,22 @@ module Ast
 
     def to_sexp
       [:let, @var.to_sexp, @val.to_sexp]
+    end
+  end
+
+  class PLambda
+    attr_reader :params
+    attr_reader :expr
+    attr_reader :where
+
+    def initialize(params, expr, where)
+      @params = params
+      @expr = expr
+      @where = where
+    end
+
+    def to_sexp
+      [:lambda, @params.collect(&:to_sexp), @expr.to_sexp, @where.collect(&:to_sexp)]
     end
   end
 end

@@ -84,5 +84,45 @@ module PLang
     end
   end
 
+  module NLambda
+    def build
+      @where = []
+      if where.respond_to?(:build)
+        @where = where.build
+      end
+      Ast::PLambda.new(params.build, statement.build, @where)
+    end
+  end
+
+  module NWhere
+    def build
+      params = [where_params.let.build]
+      if where_params.whr_params.elements.respond_to?(:collect)
+        params |= where_params.whr_params.elements.collect { |element| element.let.build }
+      end
+      params
+    end
+  end
+
+  module NLambdaParams
+    def build
+      params = [lambda_params_list.form.build]
+      if lambda_params_list.lmbd_params_list.elements.respond_to?(:collect)
+        params |= lambda_params_list.lmbd_params_list.elements.collect { |element| element.form.build }
+      end
+      params
+    end
+  end
+
+  module NObjectForm
+    def build
+      if obj_form_list.respond_to?(:build)
+        Ast::PObject.new(id.text_value, obj_form_list.build)
+      else
+        Ast::PObject.new(id.text_value, [])
+      end
+    end
+  end
+
 end
 

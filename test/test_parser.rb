@@ -21,7 +21,7 @@ class TestParser < Test::Unit::TestCase
     end
 
     EXPRESSIONS.each_with_index do |expr, i|
-      if i < 33
+      if i < 50
         should "build the expression ##{i}" do
           assert_equal eval(BUILT_EXPRESSIONS[i]), @parser.parse(expr).build.collect(&:to_sexp)
         end

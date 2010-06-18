@@ -59,23 +59,23 @@ grammar PLang
   end
   
   rule lambda
-    '[' spaces? lambda_params? spaces? statement spaces? ']' spaces? where?
+    '[' spaces? params:lambda_params? spaces? statement spaces? ']' spaces? where:where? <NLambda>
   end
   
   rule where
-    ':' spaces? '(' spaces? where_params spaces? ')'
+    ':' spaces? '(' spaces? where_params spaces? ')' <NWhere>
   end
 
   rule where_params
-    let spaces? where_params? / (spaces? ',' spaces? let)+
+    let spaces? whr_params:where_params? / (spaces? ',' spaces? let)+
   end
 
   rule lambda_params
-    lambda_params_list spaces? '|'
+    lambda_params_list spaces? '|' <NLambdaParams>
   end
   
   rule lambda_params_list
-	  form spaces? lambda_params_list? / (spaces? ',' spaces? form)+
+	  form spaces? lmbd_params_list:lambda_params_list? / (spaces? ',' spaces? form)+
   end
   
   rule form
@@ -83,11 +83,11 @@ grammar PLang
   end
   
   rule object_form
-    '{' spaces? id spaces? object_form_list? spaces? '}'
+    '{' spaces? id spaces? obj_form_list:object_form_list? spaces? '}' <NObjectForm>
   end
   
   rule object_form_list
-    ':' spaces? lambda_params_list
+    ':' spaces? lambda_params_list <NLambdaParams>
   end
   
   rule object
