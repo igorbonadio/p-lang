@@ -24,6 +24,7 @@ x>=1
 if(x>1, "verdadeiro", "falso")
 begin(1+2+3, "oi", 2<3, 'a')
 sin(2*pi)-cos(2*pi)
+f()
 x = 1
 x = 1+2+3+4
 y = 1+2*x/2
@@ -48,6 +49,9 @@ sum = [ a, b| a + b]
 f = [x| begin(algo=x, algo*algo, algo)]
 f = [x| f(x) + g(x)] : (f = [x| x*x], g = [x| x/2])
 f = [x| y] : (y = 2*x)
+p->x
+p->x(1)
+p->x()
 {aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])
 {algo: x, y}->algo = [x| x]
 {algo} -> algo = 1

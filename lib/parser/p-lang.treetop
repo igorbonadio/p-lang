@@ -5,14 +5,22 @@ grammar PLang
   end
   
   rule statement
-    binop / let / object_call / expr
+    binop / let / object_op / expr
   end
 
-  rule object_call
-    expr spaces? '->' spaces? id sspaces? '(' spaces? statement_list? spaces? ')' /
-    expr spaces? '->' spaces? id spaces?
+  rule object_op
+    object_msg /
+    object_get
   end
-  
+
+  rule object_msg
+    expr spaces? '->' spaces? id sspaces? '(' spaces? statement_list:statement_list? spaces? ')' <NObjectMsg>
+  end
+
+  rule object_get
+    expr spaces? '->' spaces? id spaces? <NObjectGet>
+  end
+
   rule let
     var_let /
     obj_let

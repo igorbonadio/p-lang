@@ -106,4 +106,18 @@ module Ast
       [:lambda, @params.collect(&:to_sexp), @expr.to_sexp, @where.collect(&:to_sexp)]
     end
   end
+
+  class PObjectCall
+    attr_reader :obj
+    attr_reader :msg
+
+    def initialize(obj, msg)
+      @obj = obj
+      @msg = msg
+    end
+
+    def to_sexp
+      [:object_call, @obj.to_sexp, @msg.to_sexp]
+    end
+  end
 end

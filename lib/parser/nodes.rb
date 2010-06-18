@@ -70,9 +70,12 @@ module PLang
 
   module NCall
     def build
-      params = [cparams.statement.build]
-      if cparams.stm_list.elements.respond_to?(:collect)
-        params |= cparams.stm_list.elements.collect { |element| element.statement.build }
+      params = []
+      if cparams.respond_to?(:statement)
+        params = [cparams.statement.build]
+        if cparams.stm_list.elements.respond_to?(:collect)
+          params |= cparams.stm_list.elements.collect { |element| element.statement.build }
+        end
       end
       Ast::PCall.new(cid.build, params)
     end
@@ -121,6 +124,25 @@ module PLang
       else
         Ast::PObject.new(id.text_value, [])
       end
+    end
+  end
+
+  module NObjectGet
+    def build
+      Ast::PObjectCall.new(expr.build, id.build)
+    end
+  end
+
+  module NObjectMsg
+    def build
+      params = []
+      if statement_list.respond_to?(:statement)
+        params = [statement_list.statement.build]
+        if statement_list.stm_list.elements.respond_to?(:collect) 
+          params |= statement_list.stm_list.elements.collect { |element| element.statement.build }
+        end
+      end
+      Ast::PCall.new(Ast::PObjectCall.new(expr.build, id.build), [expr.build] | params)
     end
   end
 
