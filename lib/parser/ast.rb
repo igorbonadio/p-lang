@@ -120,4 +120,20 @@ module Ast
       [:object_call, @obj.to_sexp, @msg.to_sexp]
     end
   end
+
+  class PObjectLet
+    attr_reader :obj
+    attr_reader :id
+    attr_reader :value
+
+    def initialize(obj, id, value)
+      @obj = obj
+      @id = id
+      @value = value
+    end
+
+    def to_sexp
+      [:object_let, @obj.to_sexp, @id.to_sexp, @value.to_sexp]
+    end
+  end
 end

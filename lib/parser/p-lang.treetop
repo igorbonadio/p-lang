@@ -31,7 +31,7 @@ grammar PLang
   end
 
   rule obj_let
-    object_form spaces? '->' spaces? var spaces? '=' spaces? statement
+    object_form spaces? '->' spaces? var spaces? '=' spaces? statement <NObjectLet>
   end
   
   rule var

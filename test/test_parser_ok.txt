@@ -37,6 +37,7 @@ p1 = point(1,2)
 [1, 2, x, {obj: x, y}| 1]
 [x| y] : (y = [x| x+6])
 [x| y] : (y = [x| x+6], z = [x| x-6])
+x = [1]
 fibonacci = [1| 1]
 fibonacci = [2| 1]
 fibonacci = [n| fibonacci(n-1)+fibonacci(n-2)]
@@ -52,11 +53,13 @@ f = [x| y] : (y = 2*x)
 p->x
 p->x(1)
 p->x()
-{aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])
-{algo: x, y}->algo = [x| x]
-{algo} -> algo = 1
 f(1)->algo(1)
 x->algo()
 10->algo(1,2,3)
 {algo: 1, 2} -> algo()
 {algo: x, y} -> x()
+{point: x, y} -> x = [x|x]
+{aaaa: x, y}->a = [x] : (x = 1)
+{aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])
+{algo: x, y}->algo = [x| x]
+{algo} -> algo = 1

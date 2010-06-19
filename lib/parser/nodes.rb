@@ -93,7 +93,11 @@ module PLang
       if where.respond_to?(:build)
         @where = where.build
       end
-      Ast::PLambda.new(params.build, statement.build, @where)
+      @params = []
+      if params.respond_to?(:build)
+        @params = params.build
+      end
+      Ast::PLambda.new(@params, statement.build, @where)
     end
   end
 
@@ -143,6 +147,12 @@ module PLang
         end
       end
       Ast::PCall.new(Ast::PObjectCall.new(expr.build, id.build), [expr.build] | params)
+    end
+  end
+
+  module NObjectLet
+    def build
+      Ast::PObjectLet.new(object_form.build, var.build, statement.build)
     end
   end
 
