@@ -63,3 +63,5 @@ x->algo()
 {aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])
 {algo: x, y}->algo = [x| x]
 {algo} -> algo = 1
+true
+false

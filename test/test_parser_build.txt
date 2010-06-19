@@ -63,3 +63,5 @@
 [[:object_let,[:object, :aaaa, [[:id, :x], [:id, :y]]],[:id, :algo],[:lambda,[[:id, :x]],[:id, :y],[[:let,[:id, :y],[:lambda, [[:id, :x]], [:+, [:id, :x], [:literal, :integer, 6]], []]]]]]]
 [[:object_let,[:object, :algo, [[:id, :x], [:id, :y]]],[:id, :algo],[:lambda, [[:id, :x]], [:id, :x], []]]]
 [[:object_let, [:object, :algo, []], [:id, :algo], [:literal, :integer, 1]]]
+[[:literal, :boolean, :true]]
+[[:literal, :boolean, :false]]

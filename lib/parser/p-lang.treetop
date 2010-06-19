@@ -55,7 +55,7 @@ grammar PLang
   end
   
   rule expr
-	number / call / id / object / char / string / lambda / parem_expr
+	number / boolean / call / id / object / char / string / lambda / parem_expr
   end
 
   rule parem_expr
@@ -104,6 +104,18 @@ grammar PLang
   
   rule object_list
     ':' spaces?  statement_list <NObjectList>
+  end
+
+  rule boolean
+    (true / false) <NBoolean>
+  end
+
+  rule true
+    "true"
+  end
+
+  rule false
+    "false"
   end
   
   rule id

@@ -156,5 +156,11 @@ module PLang
     end
   end
 
+  module NBoolean
+    def build
+      Ast::PLiteral.new(:boolean, text_value.to_sym)
+    end
+  end
+
 end
 
