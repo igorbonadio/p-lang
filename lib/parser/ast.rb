@@ -73,7 +73,17 @@ module Ast
     end
 
     def to_sexp
-      [:call, @cid.to_sexp, @params.collect(&:to_sexp)]
+      @cid = @cid.to_sexp
+      if @cid == [:id, :if]
+        @params = @params.collect(&:to_sexp)
+        if @params.size == 3
+          [:if, @params[0], @params[1], @params[2]]
+        else
+          raise "'if' error"
+        end
+      else
+        [:call, @cid, @params.collect(&:to_sexp)]
+      end
     end
   end
 
