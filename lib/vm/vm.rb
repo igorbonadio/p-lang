@@ -32,6 +32,8 @@ module PLang
           execute_or(expr[1], expr[2], env)
         when :if
           execute_if(expr[1], expr[2], expr[3], env)
+        when :begin
+          execute_begin(expr[1], env)
       end
     end
 
@@ -60,6 +62,9 @@ module PLang
         new_env.parent = env
         values.each_with_index do |value, i|
           new_env.add(params[i][1], value)
+        end
+        where.each do |w|
+          execute(w, new_env)
         end
         execute(body, new_env)
       end
@@ -95,6 +100,14 @@ module PLang
       else
         execute(f, env)
       end
+    end
+
+    def execute_begin(exprs, env)
+      ret = nil
+      exprs.each do |expr|
+        ret = execute(expr, env)
+      end
+      ret
     end
   end
 end

@@ -95,6 +95,8 @@ module PLang
           else
             raise "'if' error"
           end
+        elsif @cid == [:id, :begin]
+          [:begin, @params.collect(&:to_sexp)]
         else
           [:call, @cid, @params.collect(&:to_sexp)]
         end
