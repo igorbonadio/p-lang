@@ -7,3 +7,6 @@ Treetop.load File.join(ROOT_PATH, '/parser/p-lang')
 
 require File.join(ROOT_PATH, '/parser/nodes')
 require File.join(ROOT_PATH, '/parser/ast')
+
+require File.join(ROOT_PATH, '/vm/environment')
+require File.join(ROOT_PATH, '/vm/vm')
