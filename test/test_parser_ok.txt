@@ -36,7 +36,7 @@ p1 = point(1,2)
 [x,y| x+y]
 [1, 2, x, {obj: x, y}| 1]
 [x| y] : (y = [x| x+6])
-[x| y] : (y = [x| x+6], z = [x| x-6])
+[x| y] : (y = [x| x+6], z = [x| x-6], k=1)
 x = [1]
 fibonacci = [1| 1], [2| 1] , [n| fibonacci(n-1)+fibonacci(n-2)]
 str_list = {list: 's', {list: 't', {list: 'r', {list: 'i', {list: 'n', {list: 'g', {list}}}}}}}

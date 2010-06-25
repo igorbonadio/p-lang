@@ -67,7 +67,11 @@ grammar PLang
   end
   
   rule statement_list
-    statement spaces?  stm_list:statement_list? / (spaces? ',' spaces? statement)+ 
+    cstatement_list / statement
+  end
+
+  rule cstatement_list
+    statement spaces?  ',' spaces? statement_list <NCStatementList>
   end
   
   rule lambda
@@ -87,7 +91,11 @@ grammar PLang
   end
 
   rule where_params
-    let spaces? whr_params:where_params? / (spaces? ',' spaces? let)+
+    cwhere_params / let
+  end
+
+  rule cwhere_params
+    let spaces? ',' spaces? where_params <NCWhereParams>
   end
 
   rule lambda_params
@@ -95,7 +103,11 @@ grammar PLang
   end
   
   rule lambda_params_list
-	  form spaces? lmbd_params_list:lambda_params_list? / (spaces? ',' spaces? form)+
+    clambda_params_list / form
+  end
+
+  rule clambda_params_list
+    form spaces? ',' spaces? lambda_params_list <NCLambdaParamsList>
   end
   
   rule form

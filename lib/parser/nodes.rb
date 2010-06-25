@@ -6,6 +6,16 @@ module PLang
     end
   end
 
+  module NCStatementList
+    def build
+      stm = statement_list.build
+      unless stm.class == Array
+        stm = [stm]
+      end
+      [statement.build] + stm
+    end
+  end
+
   module NBinOp
     def build
       PLang::Ast::PBinOp.new(op.text_value, expr.build, statement.build)
@@ -51,7 +61,11 @@ module PLang
   module NObject
     def build
       if obj_list.respond_to?(:build)
-        PLang::Ast::PObject.new(id.text_value, obj_list.build)
+        params = obj_list.build
+        unless params.class == Array
+          params = [params]
+        end
+        PLang::Ast::PObject.new(id.text_value, params)
       else
         PLang::Ast::PObject.new(id.text_value, [])
       end
@@ -60,11 +74,7 @@ module PLang
 
   module NObjectList
     def build
-      obj_list = [statement_list.statement.build]
-      if statement_list.stm_list.elements.respond_to?(:collect) 
-        obj_list |= statement_list.stm_list.elements.collect { |element| element.statement.build }
-      end
-      obj_list
+      statement_list.build
     end
   end
 
@@ -77,10 +87,10 @@ module PLang
   module NCall
     def build
       params = []
-      if cparams.respond_to?(:statement)
-        params = [cparams.statement.build]
-        if cparams.stm_list.elements.respond_to?(:collect)
-          params |= cparams.stm_list.elements.collect { |element| element.statement.build }
+      if cparams.respond_to?(:build)
+        params = cparams.build
+        unless params.class == Array
+          params = [params]
         end
       end
       PLang::Ast::PCall.new(cid.build, params)
@@ -117,21 +127,43 @@ module PLang
 
   module NWhere
     def build
-      params = [where_params.let.build]
-      if where_params.whr_params.elements.respond_to?(:collect)
-        params |= where_params.whr_params.elements.collect { |element| element.let.build }
+      w = where_params.build
+      if w.class == Array
+        w
+      else
+        [w]
       end
-      params
+    end
+  end
+
+  module NCWhereParams
+    def build
+      w = where_params.build
+      unless w.class == Array
+        w = [w]
+      end
+      [let.build] + w
     end
   end
 
   module NLambdaParams
     def build
-      params = [lambda_params_list.form.build]
-      if lambda_params_list.lmbd_params_list.elements.respond_to?(:collect)
-        params |= lambda_params_list.lmbd_params_list.elements.collect { |element| element.form.build }
+      params = lambda_params_list.build
+      if params.class == Array
+        params
+      else
+        [params]
       end
-      params
+    end
+  end
+
+  module NCLambdaParamsList
+    def build
+      params = lambda_params_list.build
+      unless params.class == Array
+        params = [params]
+      end
+      [form.build] + params
     end
   end
 
@@ -154,10 +186,10 @@ module PLang
   module NObjectMsg
     def build
       params = []
-      if statement_list.respond_to?(:statement)
-        params = [statement_list.statement.build]
-        if statement_list.stm_list.elements.respond_to?(:collect) 
-          params |= statement_list.stm_list.elements.collect { |element| element.statement.build }
+      if statement_list.respond_to?(:build)
+        params = statement_list.build
+        unless params.class == Array
+          params = [params]
         end
       end
       PLang::Ast::PCall.new(PLang::Ast::PObjectCall.new(expr.build, id.build), [expr.build] | params)
