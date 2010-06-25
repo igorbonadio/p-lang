@@ -71,6 +71,14 @@ grammar PLang
   end
   
   rule lambda
+    clamb / lamb
+  end
+
+  rule clamb
+    lamb spaces? ',' spaces? lambda <NCLambda>
+  end
+
+  rule lamb
     '[' spaces? params:lambda_params? spaces? statement spaces? ']' spaces? where:where? <NLambda>
   end
   

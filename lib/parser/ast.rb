@@ -121,15 +121,17 @@ module PLang
       attr_reader :params
       attr_reader :expr
       attr_reader :where
+      attr_accessor :next_lambda
 
       def initialize(params, expr, where)
         @params = params
         @expr = expr
         @where = where
+        @next_lambda = nil
       end
 
       def to_sexp
-        [:lambda, @params.collect(&:to_sexp), @expr.to_sexp, @where.collect(&:to_sexp)]
+        [:lambda, @params.collect(&:to_sexp), @expr.to_sexp, @where.collect(&:to_sexp), @next_lambda]
       end
     end
 

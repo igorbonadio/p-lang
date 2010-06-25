@@ -107,6 +107,14 @@ module PLang
     end
   end
 
+  module NCLambda
+    def build
+      nlambda = lamb.build
+      nlambda.next_lambda = lambda.build.to_sexp
+      nlambda
+    end
+  end
+
   module NWhere
     def build
       params = [where_params.let.build]
