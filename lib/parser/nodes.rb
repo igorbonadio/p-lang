@@ -2,52 +2,58 @@ module PLang
 
   module NStatements
     def build
-      elements.collect { |element| Ast::PStatement.new(element.statement.build) }
+      elements.collect { |element| PLang::Ast::PStatement.new(element.statement.build) }
     end
   end
 
   module NBinOp
     def build
-      Ast::PBinOp.new(op.text_value, expr.build, statement.build)
+      PLang::Ast::PBinOp.new(op.text_value, expr.build, statement.build)
+    end
+  end
+
+  module NUnOp
+    def build
+      PLang::Ast::PUnOp.new(:not, statement.build)
     end
   end
 
   module NInteger
     def build
-      Ast::PLiteral.new(:integer, text_value.to_i)
+      PLang::Ast::PLiteral.new(:integer, text_value.to_i)
     end
   end
 
   module NDecimal
     def build
-      Ast::PLiteral.new(:decimal, text_value.to_f)
+      PLang::Ast::PLiteral.new(:decimal, text_value.to_f)
     end
   end
 
   module NString
     def build
-      Ast::PLiteral.new(:string, str.text_value)
+      PLang::Ast::PLiteral.new(:string, str.text_value)
     end
   end
 
   module NChar
     def build
-      Ast::PLiteral.new(:char, c.text_value)
+      PLang::Ast::PLiteral.new(:char, c.text_value)
     end
   end
 
   module NId
     def build
-      Ast::PId.new(text_value)
+      PLang::Ast::PId.new(text_value)
     end
   end
 
   module NObject
     def build
       if obj_list.respond_to?(:build)
-        Ast::PObject.new(id.text_value, obj_list.build)
+        PLang::Ast::PObject.new(id.text_value, obj_list.build)
       else
-        Ast::PObject.new(id.text_value, [])
+        PLang::Ast::PObject.new(id.text_value, [])
       end
     end
   end
@@ -77,13 +83,13 @@ module PLang
           params |= cparams.stm_list.elements.collect { |element| element.statement.build }
         end
       end
-      Ast::PCall.new(cid.build, params)
+      PLang::Ast::PCall.new(cid.build, params)
     end
   end
 
   module NVarLet
     def build
-      Ast::PLet.new(var.build, statement.build)
+      PLang::Ast::PLet.new(var.build, statement.build)
     end
   end
 
@@ -97,7 +103,7 @@ module PLang
       if params.respond_to?(:build)
         @params = params.build
       end
-      Ast::PLambda.new(@params, statement.build, @where)
+      PLang::Ast::PLambda.new(@params, statement.build, @where)
     end
   end
 
@@ -124,16 +130,16 @@ module PLang
   module NObjectForm
     def build
       if obj_form_list.respond_to?(:build)
-        Ast::PObject.new(id.text_value, obj_form_list.build)
+        PLang::Ast::PObject.new(id.text_value, obj_form_list.build)
       else
-        Ast::PObject.new(id.text_value, [])
+        PLang::Ast::PObject.new(id.text_value, [])
       end
     end
   end
 
   module NObjectGet
     def build
-      Ast::PObjectCall.new(expr.build, id.build)
+      PLang::Ast::PObjectCall.new(expr.build, id.build)
     end
   end
 
@@ -146,19 +152,19 @@ module PLang
           params |= statement_list.stm_list.elements.collect { |element| element.statement.build }
         end
       end
-      Ast::PCall.new(Ast::PObjectCall.new(expr.build, id.build), [expr.build] | params)
+      PLang::Ast::PCall.new(PLang::Ast::PObjectCall.new(expr.build, id.build), [expr.build] | params)
     end
   end
 
   module NObjectLet
     def build
-      Ast::PObjectLet.new(object_form.build, var.build, statement.build)
+      PLang::Ast::PObjectLet.new(object_form.build, var.build, statement.build)
     end
   end
 
   module NBoolean
     def build
-      Ast::PLiteral.new(:boolean, text_value.to_sym)
+      PLang::Ast::PLiteral.new(:boolean, text_value.to_sym)
     end
   end
 

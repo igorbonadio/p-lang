@@ -65,3 +65,10 @@ x->algo()
 {algo} -> algo = 1
 true
 false
+x = true
+if(true, "sim", "nao")
+x and y
+if(true and false, 1, 2)
+if((x and y) or z, 1, 2)
+not true
+x = (x and y) or (not k)

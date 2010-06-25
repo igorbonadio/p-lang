@@ -5,7 +5,7 @@ grammar PLang
   end
   
   rule statement
-    binop / let / object_op / expr
+    unop / binop / let / object_op / expr
   end
 
   rule object_op
@@ -37,13 +37,17 @@ grammar PLang
   rule var
     id / object
   end
+
+  rule unop
+     'not' spaces? statement <NUnOp>
+  end
   
   rule binop
     expr spaces? op spaces? statement <NBinOp>
   end
 
   rule op
-    '+' / '-' / '*' / '/' / '%' / '>=' / '<=' / '>' / '<' / '==' 
+    '+' / '-' / '*' / '/' / '%' / '>=' / '<=' / '>' / '<' / '==' / 'and' / 'or'
   end
 
   rule call
