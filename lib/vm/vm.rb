@@ -19,7 +19,7 @@ module PLang
         when :let
           execute_let(expr[1], expr[2], env)
         when :lambda
-          execute_lambda(expr[1], expr[2], expr[3], env)
+          execute_lambda(expr[1], expr[2], expr[3], expr[4], env)
         when :call
           execute_call(expr[1], expr[2], env)
         when :id
@@ -56,18 +56,34 @@ module PLang
       env.add(id[1], execute(value, env))
     end
 
-    def execute_lambda(params, body, where, env)
-      Proc.new do |values|
+    def execute_lambda(params, body, where, next_lambda, env)
+      lambda = []
+      lambda << Proc.new do |values|
         new_env = PLang::Environment.new
         new_env.parent = env
         values.each_with_index do |value, i|
-          new_env.add(params[i][1], value)
+          if params[i][0] == :id
+            new_env.add(params[i][1], value)
+          end
         end
         where.each do |w|
           execute(w, new_env)
         end
         execute(body, new_env)
       end
+      form = []
+      params.each do |param|
+        unless param[0] == :id
+          form << execute(param, env)
+        else
+          form << nil
+        end
+      end
+      lambda[0].form = form
+      if next_lambda
+        lambda |= execute(next_lambda, env)
+      end
+      lambda
     end
 
     def execute_call(id, params, env)
@@ -75,7 +91,11 @@ module PLang
       params.each do |param|
         values << execute(param, env)
       end
-      execute(id, env).call(values)
+      execute(id, env).each do |lambda|
+        if lambda.call?(values)
+          return lambda.call(values)
+        end
+      end
     end
 
     def execute_id(id, env)
@@ -109,5 +129,24 @@ module PLang
       end
       ret
     end
+  end
+end
+
+class Proc
+  def form=(form)
+    @form = form
+  end
+
+  def call?(params)
+    ok = true
+    params.each_with_index do |param, i|
+      if(@form[i])
+        unless(@form[i] == param)
+          ok = false
+          break
+        end
+      end
+    end
+    ok
   end
 end
