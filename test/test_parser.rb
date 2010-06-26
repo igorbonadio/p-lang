@@ -2,10 +2,6 @@ require 'helper'
 
 class TestParser < Test::Unit::TestCase
   
-  #def self.get_src(filename)
-  #  File.open(File.expand_path(File.dirname(__FILE__)) + "/" + filename, 'r').readlines
-  #end
-
   EXPRESSIONS = File.readlines(File.join(File.dirname(__FILE__), "test_parser_ok.txt"))
   BUILT_EXPRESSIONS = File.readlines(File.join(File.dirname(__FILE__), "test_parser_build.txt"))
   
@@ -21,10 +17,8 @@ class TestParser < Test::Unit::TestCase
     end
 
     EXPRESSIONS.each_with_index do |expr, i|
-      if i < 74
-        should "build the expression ##{i}" do
-          assert_equal eval(BUILT_EXPRESSIONS[i]), @parser.parse(expr).build.collect(&:to_sexp)
-        end
+      should "build the expression ##{i}" do
+        assert_equal eval(BUILT_EXPRESSIONS[i]), @parser.parse(expr).build.collect(&:to_sexp)
       end
     end
   end

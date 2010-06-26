@@ -10,3 +10,4 @@ require File.join(ROOT_PATH, '/parser/ast')
 
 require File.join(ROOT_PATH, '/vm/environment')
 require File.join(ROOT_PATH, '/vm/vm')
+require File.join(ROOT_PATH, '/vm/proc')
