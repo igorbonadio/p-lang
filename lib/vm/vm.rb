@@ -39,15 +39,13 @@ module PLang
 
     def execute_literal(type, value, env)
       case type
-        when :integer
-          value
-        when :decimal
-          value
+        when :integer, :decimal
+          PObject.new(type, [value])
         when :boolean
           if value == :true
-            true
+            PObject.new(:boolean, [true])
           elsif value == :false
-            false
+            PObject.new(:boolean, [false])
           end
       end
     end
@@ -103,19 +101,33 @@ module PLang
     end
 
     def execute_binop(op, lhs, rhs, env)
-      execute(lhs, env).send(op,execute(rhs, env))
+      lhs = execute(lhs, env)
+      rhs = execute(rhs, env)
+      result = lhs.params[0].send(op,rhs.params[0])
+      if result.class == Fixnum or result.class == Bignum
+        return PObject.new(:integer, [result])
+      elsif result.class == Float
+        return PObject.new(:decimal, [result])
+      elsif result.class == TrueClass or result.class == FalseClass
+        return PObject.new(:boolean, [result])
+      end
     end
 
     def execute_and(lhs, rhs, env)
-      execute(lhs, env) and execute(rhs, env)
+      lhs = execute(lhs, env) 
+      rhs = execute(rhs, env)
+      PObject.new(:boolean, [(lhs.params[0] and rhs.params[0])])
     end
 
     def execute_or(lhs, rhs, env)
-      execute(lhs, env) or execute(rhs, env)
+      lhs = execute(lhs, env) 
+      rhs = execute(rhs, env)
+      PObject.new(:boolean, [(lhs.params[0] or rhs.params[0])])
     end
 
     def execute_if(cond, t, f, env)
-      if execute(cond, env)
+      cond = execute(cond, env)
+      if cond.params[0]
         execute(t, env)
       else
         execute(f, env)

@@ -7,7 +7,7 @@ class Proc
     ok = true
     params.each_with_index do |param, i|
       if(@form[i])
-        unless(@form[i] == param)
+        unless(@form[i].params[0] == param.params[0])
           ok = false
           break
         end

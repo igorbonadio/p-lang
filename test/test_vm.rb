@@ -14,7 +14,7 @@ class TestParser < Test::Unit::TestCase
       should "interp the program ##{i}" do
         ast = @parser.parse(program)
         vm = PLang::VM.new(ast.build.collect(&:to_sexp))
-        assert_equal eval(RESULTS[i]), vm.execute!
+        assert_equal eval(RESULTS[i]), vm.execute!.params[0]
       end
     end
   end
