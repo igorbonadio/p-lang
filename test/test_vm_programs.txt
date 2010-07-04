@@ -21,3 +21,5 @@ x=1 y=2 f=[x| x+y] f(10)
 if (true, 1, 2)
 if (false, 1, 2)
 begin(1,2,3,4)
+{obj: x, y} = {obj: 1, 2} x+y
+{obj: 5, 10, z} = {obj: 5, 10, 15} z

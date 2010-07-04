@@ -34,6 +34,8 @@ module PLang
           execute_if(expr[1], expr[2], expr[3], env)
         when :begin
           execute_begin(expr[1], env)
+        when :object_call
+          execute_object_call(expr[1], expr[2], env)
       end
     end
 
@@ -51,7 +53,28 @@ module PLang
     end
 
     def execute_let(id, value, env)
-      env.add(id[1], execute(value, env))
+      case id[0]
+        when :id
+          env.add_var(id[1], execute(value, env))
+        when :object
+          execute_let_object_params(id, value, env)
+      end
+    end
+    
+    def execute_let_object_params(obj, value, env)
+      if(obj[1] == value[1])
+        obj[2].each_with_index do |param, i|
+          if param[0] == :id
+            execute_let(param, value[2][i], env)
+          else
+            unless param == value[2][i]
+              raise "let object error"
+            end
+          end
+        end
+      else
+        raise "let object error"
+      end
     end
 
     def execute_lambda(params, body, where, next_lambda, env)
@@ -61,7 +84,7 @@ module PLang
         new_env.parent = env
         values.each_with_index do |value, i|
           if params[i][0] == :id
-            new_env.add(params[i][1], value)
+            new_env.add_var(params[i][1], value)
           end
         end
         where.each do |w|
@@ -97,7 +120,7 @@ module PLang
     end
 
     def execute_id(id, env)
-      env.get(id)
+      env.get_var(id)
     end
 
     def execute_binop(op, lhs, rhs, env)
@@ -140,6 +163,10 @@ module PLang
         ret = execute(expr, env)
       end
       ret
+    end
+    
+    def execute_object_call(object, id, env)
+      env.get_object_call(object[2], id[1])
     end
   end
 end
