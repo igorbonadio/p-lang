@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestParser < Test::Unit::TestCase
+class TestVM < Test::Unit::TestCase
   
   PROGRAMS = File.readlines(File.join(File.dirname(__FILE__), "test_vm_programs.txt"))
   RESULTS = File.readlines(File.join(File.dirname(__FILE__), "test_vm_results.txt"))

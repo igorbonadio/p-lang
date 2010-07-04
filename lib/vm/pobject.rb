@@ -8,5 +8,18 @@ module PLang
       @params = params
     end
     
+    def ==(obj)
+      if @type == obj.type
+        @params.each_with_index do |param, i|
+          unless param == obj.params[i]
+            return false
+          end
+        end
+        return true
+      else
+        return false
+      end
+    end
+    
   end
 end

@@ -34,6 +34,8 @@ module PLang
           execute_if(expr[1], expr[2], expr[3], env)
         when :begin
           execute_begin(expr[1], env)
+        when :object
+          execute_object(expr[1], expr[2], env)
         when :object_call
           execute_object_call(expr[1], expr[2], env)
       end
@@ -57,26 +59,24 @@ module PLang
         when :id
           env.add_var(id[1], execute(value, env))
         when :object
-          execute_let_object_params(id, value, env)
+          add_object_var(id, execute(value, env), env)
       end
     end
     
-    def execute_let_object_params(obj, value, env)
-      if(obj[1] == value[1])
+    def add_object_var(obj, value, env)
+      if obj[1] == value.type
         obj[2].each_with_index do |param, i|
           if param[0] == :id
-            execute_let(param, value[2][i], env)
+            env.add_var(param[1], value.params[i])
           else
-            unless param == value[2][i]
-              raise "let object error"
+            unless execute(param, env) == value.params[i]
+              raise "add_object_var"
             end
           end
         end
-      else
-        raise "let object error"
       end
     end
-
+    
     def execute_lambda(params, body, where, next_lambda, env)
       lambda = []
       lambda << Proc.new do |values|
@@ -163,6 +163,14 @@ module PLang
         ret = execute(expr, env)
       end
       ret
+    end
+    
+    def execute_object(type, params, env)
+      values = []
+      params.each do |param|
+        values << execute(param, env)
+      end
+      PObject.new(type, values)
     end
     
     def execute_object_call(object, id, env)

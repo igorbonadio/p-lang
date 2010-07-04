@@ -26,7 +26,7 @@ module PLang
         raise "get_var"
       end
     end
-    
+        
     def add_object_call(object, msg, value)
       unless @object_call[object]
         @object_call[object] = Hash.new
