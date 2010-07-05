@@ -21,5 +21,14 @@ module PLang
       end
     end
     
+    def form
+      case @type
+        when :integer, :decimal, :boolean
+          [:literal, @type, @params[0]]
+        else
+          [:object, @type, @params.collect(&:form)]
+      end
+    end
+    
   end
 end

@@ -27,16 +27,22 @@ module PLang
       end
     end
         
-    def add_object_call(object, msg, value)
-      unless @object_call[object]
-        @object_call[object] = Hash.new
+    def add_object_call(form, msg, value)
+      unless @object_call[msg]
+        @object_call[msg] = Hash.new
       end
-      @object_call[object][msg] = value
+      @object_call[msg][form] = value
     end
     
     def get_object_call(object, msg)
       begin
-        @object_call[object][msg]
+        lamb = []
+        @object_call[msg].each do |obj|
+          if obj[0][1] == object.type
+            lamb |= obj[1]
+          end
+        end
+        return lamb
       rescue
         raise "get_object_call"
       end

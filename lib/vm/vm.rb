@@ -36,6 +36,8 @@ module PLang
           execute_begin(expr[1], env)
         when :object
           execute_object(expr[1], expr[2], env)
+        when :object_let
+          execute_object_let(expr[1], expr[2], expr[3], env)
         when :object_call
           execute_object_call(expr[1], expr[2], env)
       end
@@ -102,10 +104,13 @@ module PLang
       end
       form = []
       params.each do |param|
-        if param[0] == :id or param[0] == :object
-          form << nil
-        else
-          form << execute(param, env)
+        case param[0]
+          when :id
+            form << nil
+          when :object
+            form << param
+          else
+            form << execute(param, env).form
         end
       end
       lambda[0].form = form
@@ -182,8 +187,13 @@ module PLang
       PObject.new(type, values)
     end
     
+    def execute_object_let(obj, msg, value, env)
+      value[1] << obj
+      env.add_object_call(obj, msg[1], execute(value, env))
+    end
+    
     def execute_object_call(object, id, env)
-      env.get_object_call(object[2], id[1])
+      env.get_object_call(execute(object, env), id[1])
     end
   end
 end
