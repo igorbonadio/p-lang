@@ -66,14 +66,19 @@ module PLang
     def add_object_var(obj, value, env)
       if obj[1] == value.type
         obj[2].each_with_index do |param, i|
-          if param[0] == :id
-            env.add_var(param[1], value.params[i])
-          else
-            unless execute(param, env) == value.params[i]
-              raise "add_object_var"
-            end
+          case param[0]
+            when :id
+              env.add_var(param[1], value.params[i])
+            when :object
+              add_object_var(param, value.params[i], env)
+            else
+              unless execute(param, env) == value.params[i]
+                raise "add_object_var #1"
+              end
           end
         end
+      else
+        raise "add_object_var #2"
       end
     end
     
@@ -83,8 +88,11 @@ module PLang
         new_env = PLang::Environment.new
         new_env.parent = env
         values.each_with_index do |value, i|
-          if params[i][0] == :id
-            new_env.add_var(params[i][1], value)
+          case params[i][0]
+            when :id
+              new_env.add_var(params[i][1], value)
+            when :object
+              add_object_var(params[i], value, new_env)
           end
         end
         where.each do |w|
@@ -94,10 +102,10 @@ module PLang
       end
       form = []
       params.each do |param|
-        unless param[0] == :id
-          form << execute(param, env)
-        else
+        if param[0] == :id or param[0] == :object
           form << nil
+        else
+          form << execute(param, env)
         end
       end
       lambda[0].form = form
@@ -117,6 +125,7 @@ module PLang
           return lambda.call(values)
         end
       end
+      raise "execute_call"
     end
 
     def execute_id(id, env)

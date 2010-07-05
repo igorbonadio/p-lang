@@ -23,3 +23,8 @@ if (false, 1, 2)
 begin(1,2,3,4)
 {obj: x, y} = {obj: 1, 2} x+y
 {obj: 5, 10, z} = {obj: 5, 10, 15} z
+[{obj: 10, x}| x]({obj: 10, -5})
+[{obj: {algo}, x}| x]({obj: {algo}, 13})
+[{obj: {algo: 10}, x}| x]({obj: {algo: 10}, 1})
+[{obj: {algo: x}, y}| x+y]({obj: {algo: 1}, 2})
+[{obj: {algo: x}, y}, 1, z, {ok}| x+y+z]({obj: {algo: 1}, 2}, 1, 10, {ok})
