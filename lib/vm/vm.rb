@@ -59,7 +59,9 @@ module PLang
     def execute_let(id, value, env)
       case id[0]
         when :id
-          env.add_var(id[1], execute(value, env))
+          unless id[1] == :_
+            env.add_var(id[1], execute(value, env))
+          end
         when :object
           add_object_var(id, execute(value, env), env)
       end
@@ -70,12 +72,14 @@ module PLang
         obj[2].each_with_index do |param, i|
           case param[0]
             when :id
-              case value.type
-                when :integer, :decimal, :boolean
-                  env.add_var(param[1], PObject.new(value.type, [value.params[i]]))
-                else
-                  env.add_var(param[1], value.params[i])
-              end
+              unless param[1] == :_
+                case value.type
+                  when :integer, :decimal, :boolean
+                    env.add_var(param[1], PObject.new(value.type, [value.params[i]]))
+                  else
+                    env.add_var(param[1], value.params[i])
+                  end
+                end
             when :object
               add_object_var(param, value.params[i], env)
             else
@@ -97,7 +101,9 @@ module PLang
         values.each_with_index do |value, i|
           case params[i][0]
             when :id
-              new_env.add_var(params[i][1], value)
+              unless params[i][1] == :_
+                new_env.add_var(params[i][1], value)
+              end
             when :object
               add_object_var(params[i], value, new_env)
           end
