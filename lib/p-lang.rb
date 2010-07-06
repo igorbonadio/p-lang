@@ -12,3 +12,13 @@ require File.join(ROOT_PATH, '/vm/environment')
 require File.join(ROOT_PATH, '/vm/vm')
 require File.join(ROOT_PATH, '/vm/proc')
 require File.join(ROOT_PATH, '/vm/pobject')
+
+require File.join(ROOT_PATH, '/vm/std/io')
+
+module PLang  
+  class VM
+    def initialize_global_environment(env)
+      IO.def_pfunctions(env)
+    end
+  end
+end

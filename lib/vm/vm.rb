@@ -1,4 +1,4 @@
-module PLang
+module PLang  
   class VM
     def initialize(ast)
       @ast = ast
@@ -6,6 +6,7 @@ module PLang
 
     def execute!
       env = PLang::Environment.new
+      initialize_global_environment(env)
       @ast.each do |expr|
         @ret = execute(expr, env)
       end

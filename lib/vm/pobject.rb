@@ -30,5 +30,14 @@ module PLang
       end
     end
     
+    def to_s
+      case @type
+        when :integer, :decimal, :boolean
+          @params[0]
+        else
+          "{#{@type}: #{@params.collect(&:to_s).join(",")}}"
+      end
+    end
+    
   end
 end
