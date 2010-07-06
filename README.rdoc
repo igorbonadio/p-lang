@@ -1,6 +1,25 @@
-= p-lang
+= P-Lang
 
-Description goes here.
+P is a small ('pequena' in portuguese) functional programming language.
+
+  fib = [1| 1],
+        [2| 2],
+        [n| fib(n-1) + fib(n-2)]
+  
+  fib(10)
+
+== Requirements
+
+* Ruby
+* Treetop
+
+== Install
+
+  $ sudo install p-lang
+
+== Running
+
+  $ p-lang your-program.p
 
 == Note on Patches/Pull Requests
  

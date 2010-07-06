@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "p-lang"
     gem.summary = %Q{P programming language}
-    gem.description = %Q{P programming language}
+    gem.description = %Q{P is a small ('pequena' in portuguese) functional programming language.}
     gem.email = "igorbonadio@gmail.com"
     gem.homepage = "http://github.com/igorbonadio/p-lang"
     gem.authors = ["Igor Bonadio"]
