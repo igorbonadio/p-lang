@@ -70,7 +70,12 @@ module PLang
         obj[2].each_with_index do |param, i|
           case param[0]
             when :id
-              env.add_var(param[1], value.params[i])
+              case value.type
+                when :integer, :decimal, :boolean
+                  env.add_var(param[1], PObject.new(value.type, [value.params[i]]))
+                else
+                  env.add_var(param[1], value.params[i])
+              end
             when :object
               add_object_var(param, value.params[i], env)
             else
