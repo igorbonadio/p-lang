@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require File.join(File.expand_path(File.dirname(__FILE__)), '/../lib/p-lang')
+
+if ARGV[0]
+  @parser = PLangParser.new
+  
+  ast = @parser.parse(File.readlines(ARGV[0]).join("")).build.collect(&:to_sexp)
+  
+  vm = PLang::VM.new(ast)
+  
+  p vm.execute!
+end
