@@ -46,7 +46,7 @@ module PLang
 
     def execute_literal(type, value, env)
       case type
-        when :integer, :decimal
+        when :integer, :decimal, :char, :string
           PObject.new(type, [value])
         when :boolean
           if value == :true

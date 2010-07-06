@@ -23,7 +23,7 @@ module PLang
     
     def form
       case @type
-        when :integer, :decimal, :boolean
+        when :integer, :decimal, :boolean, :char, :string
           [:literal, @type, @params[0]]
         else
           [:object, @type, @params.collect(&:form)]
@@ -34,6 +34,10 @@ module PLang
       case @type
         when :integer, :decimal, :boolean
           @params[0]
+        when :string
+          "\"#{@params[0]}\""
+        when :char
+          "\'#{@params[0]}\'"
         else
           "{#{@type}: #{@params.collect(&:to_s).join(",")}}"
       end
