@@ -137,12 +137,19 @@ module PLang
       params.each do |param|
         values << execute(param, env)
       end
-      execute(id, env).each do |lambda|
+      lamb = execute(id, env)
+      lamb.each do |lambda|
         if lambda.call?(values)
           return lambda.call(values)
         end
       end
-      raise "execute_call"
+      # CallFunctionError
+      str_value = "("
+      values.each do |v|
+        str_value += "#{v.to_s}" + ","
+      end
+      str_value[-1] = ")"
+      PError.raise_error(:CallFunctionError, "in function '#{id[1]}': no pattern matches with #{id[1]}#{str_value}")
     end
 
     def execute_id(id, env)

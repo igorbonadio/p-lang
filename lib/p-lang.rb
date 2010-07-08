@@ -12,6 +12,7 @@ require File.join(ROOT_PATH, '/vm/environment')
 require File.join(ROOT_PATH, '/vm/vm')
 require File.join(ROOT_PATH, '/vm/proc')
 require File.join(ROOT_PATH, '/vm/pobject')
+require File.join(ROOT_PATH, '/vm/perror')
 
 require File.join(ROOT_PATH, '/vm/std/io')
 

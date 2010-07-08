@@ -1,7 +1,5 @@
 class Proc
-  def form=(form)
-    @form = form
-  end
+  attr_accessor :form
   
   def compare_form(form, obj)
     if(form)
