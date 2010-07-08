@@ -13,16 +13,20 @@ class Proc
             return false
           end
         else
-          form[2].each_with_index do |p, i|
-            unless p[0] == :id
-              unless p == obj[2][i]
-                if p[0] == :object
-                  return compare_form(p, obj[2][i])
-                else
-                  return false
+          if form[2].length == obj[2].length
+            form[2].each_with_index do |p, i|
+              unless p[0] == :id
+                unless p == obj[2][i]
+                  if p[0] == :object
+                    return compare_form(p, obj[2][i])
+                  else
+                    return false
+                  end
                 end
               end
             end
+          else
+            return false
           end
         end
       end
@@ -31,11 +35,15 @@ class Proc
   end
 
   def call?(params)
-    params.each_with_index do |param, i|
-      unless compare_form(@form[i], param.form)
-        return false
+    if @form.length == params.length
+      params.each_with_index do |param, i|
+        unless compare_form(@form[i], param.form)
+          return false
+        end
       end
+      return true
+    else
+      return false
     end
-    return true
   end
 end

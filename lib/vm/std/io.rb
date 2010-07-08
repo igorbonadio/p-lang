@@ -10,7 +10,7 @@ module PLang
           puts value.to_s
         end
       end
-      lamb.form = []
+      lamb.form = [nil]
       [lamb]
     end
   end
