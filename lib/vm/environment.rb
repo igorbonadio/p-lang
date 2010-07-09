@@ -23,7 +23,7 @@ module PLang
       elsif @parent
         return @parent.get_var(id)
       else
-        raise "get_var"
+        PError.raise_error(:NameError, "undefined variable '#{id}'")
       end
     end
         
