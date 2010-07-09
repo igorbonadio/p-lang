@@ -12,7 +12,7 @@ module PLang
       unless @vars[id]
         @vars[id] = value
       else
-        raise "add_var"
+        PError.raise_error(:BindVariableError, "variable '#{id}'")
       end
     end
 
