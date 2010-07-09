@@ -148,7 +148,11 @@ module PLang
       values.each do |v|
         str_value += "#{v.to_s}" + ","
       end
-      str_value[-1] = ")"
+      if str_value[-1] == ","
+        str_value[-1] = ")"
+      else
+        str_value += ")"
+      end
       if id[0] == :object_call
         id = id[2]
       end

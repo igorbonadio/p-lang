@@ -35,8 +35,14 @@ class Proc
   def call?(params)
     if @form.length == params.length
       params.each_with_index do |param, i|
-        unless compare_form(@form[i], param.form)
-          return false
+        unless param.class == Array
+          unless compare_form(@form[i], param.form)
+            return false
+          end
+        else
+          if @form[i]
+            return false
+          end
         end
       end
       return true
