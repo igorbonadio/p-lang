@@ -9,5 +9,5 @@ if ARGV[0]
   
   vm = PLang::VM.new(ast)
   
-  vm.execute!
+  p vm.execute!
 end

@@ -44,7 +44,7 @@ module PLang
         end
         return lamb
       rescue
-        raise "get_object_call"
+        PError.raise_error(:ObjectCallError, "undefined message #{object} -> #{msg}")
       end
     end
   end

@@ -149,6 +149,9 @@ module PLang
         str_value += "#{v.to_s}" + ","
       end
       str_value[-1] = ")"
+      if id[0] == :object_call
+        id = id[2]
+      end
       PError.raise_error(:CallFunctionError, "in function '#{id[1]}': no pattern matches with #{id[1]}#{str_value}")
     end
 
