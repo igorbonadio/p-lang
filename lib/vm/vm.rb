@@ -85,12 +85,12 @@ module PLang
               add_object_var(param, value.params[i], env)
             else
               unless execute(param, env) == value.params[i]
-                raise "add_object_var #1"
+                PError.raise_error(:ObjectPatternError, "in object '#{obj[1]}'")
               end
           end
         end
       else
-        raise "add_object_var #2"
+        PError.raise_error(:ObjectTypeError, "'#{obj[1]}' expected but was '#{value.type}'")
       end
     end
     
