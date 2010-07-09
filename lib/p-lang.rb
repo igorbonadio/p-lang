@@ -14,12 +14,13 @@ require File.join(ROOT_PATH, '/vm/proc')
 require File.join(ROOT_PATH, '/vm/pobject')
 require File.join(ROOT_PATH, '/vm/perror')
 
-require File.join(ROOT_PATH, '/vm/std/io')
+require File.join(ROOT_PATH, '/vm/std/pio')
+require File.join(ROOT_PATH, '/vm/std/pstring')
 
 module PLang  
   class VM
     def initialize_global_environment(env)
-      IO.def_pfunctions(env)
+      PIO.def_pfunctions(env)
     end
   end
 end
