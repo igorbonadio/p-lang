@@ -144,11 +144,13 @@ module PLang
         end
       end
       # CallFunctionError
+      ok = false
       str_value = "("
       values.each do |v|
         str_value += "#{v.to_s}" + ","
+        ok = true
       end
-      if str_value[-1] == ","
+      if ok
         str_value[-1] = ")"
       else
         str_value += ")"
@@ -166,6 +168,8 @@ module PLang
     def execute_binop(op, lhs, rhs, env)
       lhs = execute(lhs, env)
       rhs = execute(rhs, env)
+      #p lhs
+      #p rhs
       result = lhs.params[0].send(op,rhs.params[0])
       if result.class == Fixnum or result.class == Bignum
         return PObject.new(:integer, [result])
@@ -207,10 +211,14 @@ module PLang
     
     def execute_object(type, params, env)
       values = []
-      params.each do |param|
-        values << execute(param, env)
+      if type == :integer and params.length == 1
+        return PObject.new(type, [params[0][2]])
+      else
+        params.each do |param|
+          values << execute(param, env)
+        end
+        return PObject.new(type, values)
       end
-      PObject.new(type, values)
     end
     
     def execute_object_let(obj, msg, value, env)
