@@ -17,6 +17,7 @@ require File.join(ROOT_PATH, '/vm/perror')
 require File.join(ROOT_PATH, '/vm/std/pio')
 require File.join(ROOT_PATH, '/vm/std/pstring')
 require File.join(ROOT_PATH, '/vm/std/pinteger')
+require File.join(ROOT_PATH, '/vm/std/pdecimal')
 
 module PLang  
   class VM
@@ -24,6 +25,7 @@ module PLang
       PIO.def_pfunctions(env)
       PString.def_pfunctions(env)
       PInteger.def_pfunctions(env)
+      PDecimal.def_pfunctions(env)
     end
   end
 end
