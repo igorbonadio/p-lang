@@ -9,6 +9,7 @@ if ARGV[0]
 
   if ast
     vm = PLang::VM.new(ast.build.collect(&:to_sexp))
+    
     vm.execute!
   else
     puts @parser.failure_reason

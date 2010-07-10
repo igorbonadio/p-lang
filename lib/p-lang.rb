@@ -21,6 +21,7 @@ module PLang
   class VM
     def initialize_global_environment(env)
       PIO.def_pfunctions(env)
+      PString.def_pfunctions(env)
     end
   end
 end

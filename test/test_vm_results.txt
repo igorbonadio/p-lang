@@ -37,3 +37,20 @@ true
 5
 3
 11
+"aaaaabbbbb"
+false
+true
+"c"
+"Abcde"
+"  abcde   "
+"abcde"
+false
+11
+2
+"abcXde"
+5
+8
+"edcba"
+10
+10.11
+"ABCDE"
