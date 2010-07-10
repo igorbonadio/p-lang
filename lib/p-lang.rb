@@ -16,12 +16,14 @@ require File.join(ROOT_PATH, '/vm/perror')
 
 require File.join(ROOT_PATH, '/vm/std/pio')
 require File.join(ROOT_PATH, '/vm/std/pstring')
+require File.join(ROOT_PATH, '/vm/std/pinteger')
 
 module PLang  
   class VM
     def initialize_global_environment(env)
       PIO.def_pfunctions(env)
       PString.def_pfunctions(env)
+      PInteger.def_pfunctions(env)
     end
   end
 end

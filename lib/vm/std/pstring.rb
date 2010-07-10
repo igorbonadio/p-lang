@@ -41,7 +41,7 @@ module PLang
     
     def PString.at
       lamb = Proc.new do |values|
-        PObject.new(:integer, [values[0].params[0][values[1].params[0],1]])
+        PObject.new(:char, [values[0].params[0][values[1].params[0],1]])
       end
       lamb.form = [[:object, :string, [[:id, :x]]], [:object, :integer, [[:id, :x]]]]
       [lamb]
