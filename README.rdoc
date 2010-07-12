@@ -41,7 +41,7 @@ Messages:
 
 == Install
 
-  $ sudo install p-lang
+  $ sudo gem install p-lang
 
 == Running
 
