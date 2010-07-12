@@ -22,8 +22,8 @@ Objects:
 
   {rectangle: 10, 30}
 
-  # Pattern:
-  
+Pattern:
+
   {rectangle: x, y} = {rectangle: 10, 30}
   # => x = 10
   # => y = 30
