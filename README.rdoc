@@ -10,16 +10,16 @@ P is a small ('pequena' in portuguese) functional programming language.
 
 = Features
 
-  # Functions:
-  
+Functions:
+
   fib = [1| 1],
         [2| 1],
         [n| fib(n-1) + fib(n-2)]
   
   fib(10)
 
-  # Objects:
-  
+Objects:
+
   {rectangle: 10, 30}
 
   # Pattern:
@@ -28,7 +28,8 @@ P is a small ('pequena' in portuguese) functional programming language.
   # => x = 10
   # => y = 30
 
-  # Messages:
+Messages:
+
   {integer: x} -> plus2 = [x+2]
   
   3->plus2() # => 5
