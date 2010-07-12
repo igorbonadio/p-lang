@@ -44,7 +44,11 @@ module PLang
         end
         return lamb
       rescue
-        PError.raise_error(:ObjectCallError, "undefined message #{object} -> #{msg}")
+        if @parent
+          @parent.get_object_call(object, msg)
+        else
+          PError.raise_error(:ObjectCallError, "undefined message #{object} -> #{msg}")
+        end
       end
     end
   end
