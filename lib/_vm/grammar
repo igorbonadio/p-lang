@@ -1,0 +1,38 @@
+<expr> -> <element>
+        | <arithmetic>
+        | <conditional>
+        | <let>
+        | <begin>
+        | <function_call>
+
+<element> -> NUMBER
+           | ID
+           | <object>
+           | STRING
+           | CHAR
+           | <object_message>
+           | <lambda>
+           | BOOLEAN
+           | ( <expr> )
+
+<arithmetic> -> <expr> <aop> <expr>
+
+<conditional> -> <expr> <cop> <expr>
+
+<let> -> <expr> = <expr>
+
+<begin> -> BEGIN ( <expr_list> )
+
+<function_call> -> <expr> ( <expr_list> )
+
+<expr_list> -> <expr>
+             | <expr_list> , <expr>
+
+<object> -> { ID : <expr_list> }
+
+<object_message> -> <expr> -> ID
+
+<lambda> -> [ <expr_list> | <expr> ] <where>?
+          | <lambda> , [ <expr_list> | <expr> ] <where>?
+
+<where> -> : ( <let_list> )
