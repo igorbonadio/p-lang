@@ -3,6 +3,7 @@
         | <conditional>
         | <let>
         | <begin>
+        | <list>
         | <function_call>
 
 <element> -> NUMBER
@@ -22,6 +23,8 @@
 <let> -> <expr> = <expr>
 
 <begin> -> BEGIN ( <expr_list> )
+
+<list> -> LIST ( <expr_list> )
 
 <function_call> -> <expr> ( <expr_list> )
 

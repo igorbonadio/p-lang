@@ -43,7 +43,7 @@ module PLang
                  send_token(:lcurly, '{')
                 @i += 1
               when '}'
-                 send_token(:lcurly, '}')
+                 send_token(:rcurly, '}')
                 @i += 1
               when ','
                  send_token(:comma, ',')

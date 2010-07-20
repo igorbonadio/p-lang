@@ -1,31 +1,5 @@
 ROOT_PATH = File.expand_path(File.dirname(__FILE__))
 
-require 'rubygems'
-require 'treetop'
-
-Treetop.load File.join(ROOT_PATH, '/parser/p-lang')
-
-require File.join(ROOT_PATH, '/parser/nodes')
-require File.join(ROOT_PATH, '/parser/ast')
-
-require File.join(ROOT_PATH, '/vm/environment')
-require File.join(ROOT_PATH, '/vm/vm')
-require File.join(ROOT_PATH, '/vm/proc')
-require File.join(ROOT_PATH, '/vm/pobject')
-require File.join(ROOT_PATH, '/vm/perror')
-
-require File.join(ROOT_PATH, '/vm/std/pio')
-require File.join(ROOT_PATH, '/vm/std/pstring')
-require File.join(ROOT_PATH, '/vm/std/pinteger')
-require File.join(ROOT_PATH, '/vm/std/pdecimal')
-
-module PLang  
-  class VM
-    def initialize_global_environment(env)
-      PIO.def_pfunctions(env)
-      PString.def_pfunctions(env)
-      PInteger.def_pfunctions(env)
-      PDecimal.def_pfunctions(env)
-    end
-  end
-end
+require File.join(ROOT_PATH, '/vm/lexer')
+require File.join(ROOT_PATH, '/vm/error')
+require File.join(ROOT_PATH, '/vm/token')
