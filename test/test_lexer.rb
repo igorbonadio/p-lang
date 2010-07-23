@@ -1,6 +1,6 @@
 require 'helper'
 
-class TestParser < Test::Unit::TestCase
+class TestLexer < Test::Unit::TestCase
   
   EXPRESSIONS = File.readlines(File.join(File.dirname(__FILE__), "test_lexer"))
   TOKENS = File.readlines(File.join(File.dirname(__FILE__), "test_lexer_tokens"))

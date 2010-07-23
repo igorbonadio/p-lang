@@ -1,10 +1,12 @@
+<program> -> <elements>*
+
 <expr> -> <element>
         | <arithmetic>
         | <conditional>
+        | <not>
         | <let>
         | <begin>
         | <list>
-        | <function_call>
 
 <element> -> NUMBER
            | ID
@@ -12,30 +14,40 @@
            | STRING
            | CHAR
            | <object_message>
+           | <function_call>
            | <lambda>
            | BOOLEAN
            | ( <expr> )
 
-<arithmetic> -> <expr> <aop> <expr>
+<arithmetic> -> <element> 
+              | <element> <aop> <arithmetic>
 
-<conditional> -> <expr> <cop> <expr>
+<conditional> -> <element>
+               | <element> <cop> <conditional>
 
-<let> -> <expr> = <expr>
+<not> -> NOT <expr>
+
+<let> -> <element> = <expr>
 
 <begin> -> BEGIN ( <expr_list> )
 
 <list> -> LIST ( <expr_list> )
-
-<function_call> -> <expr> ( <expr_list> )
 
 <expr_list> -> <expr>
              | <expr_list> , <expr>
 
 <object> -> { ID : <expr_list> }
 
-<object_message> -> <expr> -> ID
-
-<lambda> -> [ <expr_list> | <expr> ] <where>?
+<lambda> -> [ <expr_list> '|' <expr> ] <where>?
           | <lambda> , [ <expr_list> | <expr> ] <where>?
 
 <where> -> : ( <let_list> )
+
+<object_message> -> <element> -> ID
+
+<function_call> -> <lambs> ( <expr_list> )
+
+<lambs> -> ID
+         | <object_message>
+         | <function_call>
+         | <lambda>
