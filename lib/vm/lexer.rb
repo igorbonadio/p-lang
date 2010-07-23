@@ -80,9 +80,13 @@ module PLang
                 @i = comment
               when "\t", "\s"
                 @i += 1
-              when "\n", "\r"
-                 send_token(:break, @src[@i])
-                 @line += 1
+              when "\n"
+                send_token(:break, "\\n")
+                @line += 1
+                @i += 1
+              when "\r"
+                send_token(:break, "\\r")
+                @line += 1
                 @i += 1
               else
                 Error.syntax_error(@line, @src, @i, "unknown token '#{@src[@i]}'")

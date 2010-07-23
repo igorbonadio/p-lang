@@ -2,6 +2,7 @@ module PLang
   module VM
     class Parser
       def initialize(src)
+        @eof = Token.new(:eof)
         @lexer = Lexer.new(src)
         consume
       end
@@ -76,6 +77,15 @@ module PLang
             if token.type == :rsquare
               consume
               return [params, body]
+            else
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
+            end
+          else
+            if token.type == :rsquare
+              consume
+              return [[], params]
+            else
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
             end
           end
         end
@@ -88,6 +98,8 @@ module PLang
           if token.type == :rround
             consume
             return ll
+          else
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
           end
         end
       end
@@ -97,6 +109,8 @@ module PLang
         e = element
         if token.type == :let
           e = let(e)
+        else
+          Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '='")
         end
         ll << e
         while token.type == :comma
@@ -104,6 +118,8 @@ module PLang
           e = element
           if token.type == :let
             e = let(e)
+          else
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '='")
           end
           ll << e
         end
@@ -122,8 +138,14 @@ module PLang
               if token.type == :rcurly
                 consume_and_skip_breaks
                 return ast
+              else
+                Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '}'")
               end
+            else
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ':'")
             end
+          else
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting an identifier")
           end
         end
       end
@@ -135,8 +157,13 @@ module PLang
             consume
             e = expr_list
             if token.type == :rround
+              consume_and_skip_breaks
               return [:list] << e
+            else
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
             end
+          else
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '('")
           end
         end
       end
@@ -148,8 +175,13 @@ module PLang
             consume
             e = expr_list
             if token.type == :rround
+              consume_and_skip_breaks
               return [:begin] << e
+            else
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
             end
+          else
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '('")
           end
         end
       end
@@ -236,10 +268,10 @@ module PLang
               consume
               ast = e
             else
-              raise "TODO: error ')'"
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
             end
           else
-            raise "TODO: element"
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '<element>'")
         end
         skip_breaks
         if token.type == :arrow
@@ -261,12 +293,14 @@ module PLang
           if token.type == :lround
             ast = pcall(ast)
           end
-        end
-        if token.type == :arrow
-          ast = object_message(ast)
-          if token.type == :lround
-            ast = pcall(ast)
+          if token.type == :arrow
+            ast = object_message(ast)
+            if token.type == :lround
+              ast = pcall(ast)
+            end
           end
+        else
+          Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
         end
         ast
       end
@@ -283,7 +317,12 @@ module PLang
       end
 
       def consume
-        @token = @lexer.next_token
+        t = @lexer.next_token
+        if t
+          @token = t
+        else
+          @token.type = :eof
+        end
       end
 
       def consume_and_skip_breaks
@@ -292,7 +331,7 @@ module PLang
       end
 
       def token
-        @token ||= Token.new(:eof)
+        @token || @eof
       end
     end
   end
