@@ -8,12 +8,7 @@ module PLang
       end
 
       def method_missing(name, *args)
-        value = @params[name]
-        if value
-          value
-        else
-          raise "TODO: node"
-        end 
+        return @params[name]
       end
 
       def inspect

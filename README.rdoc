@@ -2,8 +2,8 @@
 
 P is a small ('pequena' in portuguese) functional programming language.
 
-  fib = [1| 1],
-        [2| 1],
+  fib = [1| 1];
+        [2| 1];
         [n| fib(n-1) + fib(n-2)]
   
   fib(10)
@@ -12,8 +12,8 @@ P is a small ('pequena' in portuguese) functional programming language.
 
 Functions:
 
-  fib = [1| 1],
-        [2| 1],
+  fib = [1| 1];
+        [2| 1];
         [n| fib(n-1) + fib(n-2)]
   
   fib(10)

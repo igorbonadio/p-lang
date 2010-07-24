@@ -154,7 +154,7 @@ module PLang
         if token.type == :list
           consume
           if token.type == :lround
-            consume
+            consume_and_skip_breaks
             e = expr_list
             if token.type == :rround
               consume_and_skip_breaks
@@ -172,7 +172,7 @@ module PLang
         if token.type == :begin
           consume
           if token.type == :lround
-            consume
+            consume_and_skip_breaks
             e = expr_list
             if token.type == :rround
               consume_and_skip_breaks
