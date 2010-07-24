@@ -82,35 +82,11 @@ module PLang
         end
         if token.type == :comma
           consume_and_skip_breaks
-          return [:lambda, params, body, w, plambda]
+          return Node.new(:lambda, {:params => params, :body => body, :where => w, :next_lambda => plambda})
         else
-          return [:lambda, params, body, w, nil]
+          return Node.new(:lambda, {:params => params, :body => body, :where => w, :next_lambda => nil})
         end
       end
-
-      #def plambda_partial
-      #  if token.type == :lsquare
-      #    consume_and_skip_breaks
-      #    params = expr_list
-      #    if token.type == :pipe
-      #      consume_and_skip_breaks
-      #      body = expr
-      #      if token.type == :rsquare
-      #        consume
-      #        return [params, body]
-      #      else
-      #        Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
-      #      end
-      #    else
-      #      if token.type == :rsquare
-      #        consume
-      #        return [[], params]
-      #      else
-      #        Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
-      #      end
-      #    end
-      #  end
-      #end
 
       def where
         if token.type == :lround
@@ -155,7 +131,7 @@ module PLang
             consume_and_skip_breaks
             if token.type == :colon
               consume_and_skip_breaks
-              ast = [:object, id.value, expr_list]
+              ast = Node.new(:object, {:id => id.value, :params => expr_list})
               if token.type == :rcurly
                 consume_and_skip_breaks
                 return ast
@@ -179,7 +155,7 @@ module PLang
             e = expr_list
             if token.type == :rround
               consume_and_skip_breaks
-              return [:list] << e
+              return Node.new(:list, {:elements => e})
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
             end
@@ -197,7 +173,7 @@ module PLang
             e = expr_list
             if token.type == :rround
               consume_and_skip_breaks
-              return [:begin] << e
+              return Node.new(:begin, {:expressions => e})
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
             end
@@ -219,7 +195,7 @@ module PLang
       def let(ast)
         if token.type == :let
           consume_and_skip_breaks
-          [:let, ast, expr]
+          Node.new(:let, {:lhs => ast, :rhs => expr})
         end
       end
 
@@ -228,7 +204,7 @@ module PLang
         case t.type
           when :not
             consume_and_skip_breaks
-            [:not, expr]
+            Node.new(:not, {:lhs => expr})
         end
       end
 
@@ -237,7 +213,7 @@ module PLang
         case t.type
           when :equal, :diff, :major, :major_equal, :minor, :minor_equal, :and, :or, :not
             consume_and_skip_breaks
-            conditional([t.type, ast, element])
+            conditional(Node.new(t.type, {:lhs => ast, :rhs => element}))
           else
             ast
         end
@@ -248,7 +224,7 @@ module PLang
         case t.type
           when :add, :sub, :mul, :div, :mod
             consume_and_skip_breaks
-            arithmetic([t.type, ast, element])
+            arithmetic(Node.new(t.type, {:lhs => ast, :rhs => element}))
           else
             ast
         end
@@ -259,15 +235,15 @@ module PLang
           when :integer, :decimal, :string, :char
             t = token
             consume
-            ast = [:literal, t.type, t.value]
+            ast = Node.new(t.type, {:value => t.value})
           when :true
             t = token
             consume
-            ast = [:literal, :boolean, :true]
+            ast = Node.new(:boolean, {:value => :true})
           when :false
             t = token
             consume
-            ast = [:literal, :boolean, :false]
+            ast = Node.new(:boolean, {:value => :false})
           when :lsquare
             ast = plambda
             if token.type == :lround
@@ -278,7 +254,7 @@ module PLang
           when :id
             t = token
             consume
-            ast = [:id, t.value]
+            ast = Node.new(:id, {:value => t.value})
             if token.type == :lround
               ast = pcall(ast)
             end
@@ -310,7 +286,7 @@ module PLang
         params = expr_list unless token.type == :rround
         if token.type == :rround
           consume
-          ast =  [:call, ast, params]
+          ast =  Node.new(:call, {:lambda => ast, :params => params})
           if token.type == :lround
             ast = pcall(ast)
           end
@@ -332,7 +308,7 @@ module PLang
           id = token
           if id.type == :id
             consume
-            [:object_message, ast, [:id, id.value]]
+            Node.new(:object_message, {:object => ast, :message => Node.new(:id, {:value=>id.value})})
           end
         end
       end

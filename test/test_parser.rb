@@ -10,7 +10,7 @@ class TestParser < Test::Unit::TestCase
     EXPRESSIONS.each_with_index do |expr, i|
       parser = PLang::Parser::SyntaxAnalyser.new(EXPRESSIONS[i])
       should "parse the expression ##{i}" do
-        assert_equal parser.parse, eval(BUILD[i])
+        assert_equal eval(parser.parse.inspect), eval(BUILD[i])
       end
     end
   
