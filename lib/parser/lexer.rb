@@ -1,6 +1,5 @@
 module PLang
-  module VM
-
+  module Parser
     class Lexer
       def initialize(src)
         @line = 1

@@ -1,5 +1,5 @@
 module PLang
-  module VM
+  module Parser
     class Error
       def Error.syntax_error(line, src, i, msg)
         error = "#{line}:sintax error: #{msg}\n#{Error.show_error(src, i)}"

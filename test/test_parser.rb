@@ -8,7 +8,7 @@ class TestParser < Test::Unit::TestCase
   context "The Parser" do
     
     EXPRESSIONS.each_with_index do |expr, i|
-      parser = PLang::VM::Parser.new(EXPRESSIONS[i])
+      parser = PLang::Parser::SyntaxAnalyser.new(EXPRESSIONS[i])
       should "parse the expression ##{i}" do
         assert_equal parser.parse, eval(BUILD[i])
       end

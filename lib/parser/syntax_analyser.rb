@@ -1,6 +1,6 @@
 module PLang
-  module VM
-    class Parser
+  module Parser
+    class SyntaxAnalyser
       def initialize(src)
         @eof = Token.new(:eof)
         @lexer = Lexer.new(src)
@@ -52,22 +52,7 @@ module PLang
       end
 
       def plambda
-        pl = []
-        w = []
 
-        pl << plambda_partial
-        while token.type == :comma
-          consume_and_skip_breaks
-          pl << plambda_partial
-        end
-        if token.type == :colon
-          consume_and_skip_breaks
-          w = where
-        end
-        [:lambda, pl, w]
-      end
-
-      def plambda_partial
         if token.type == :lsquare
           consume_and_skip_breaks
           params = expr_list
@@ -76,20 +61,56 @@ module PLang
             body = expr
             if token.type == :rsquare
               consume
-              return [params, body]
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
             end
           else
             if token.type == :rsquare
               consume
-              return [[], params]
+              body = params
+              params = []
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
             end
           end
+        end        
+        if token.type == :colon
+          consume_and_skip_breaks
+          w = where
+        else
+          w = []
+        end
+        if token.type == :comma
+          consume_and_skip_breaks
+          return [:lambda, params, body, w, plambda]
+        else
+          return [:lambda, params, body, w, nil]
         end
       end
+
+      #def plambda_partial
+      #  if token.type == :lsquare
+      #    consume_and_skip_breaks
+      #    params = expr_list
+      #    if token.type == :pipe
+      #      consume_and_skip_breaks
+      #      body = expr
+      #      if token.type == :rsquare
+      #        consume
+      #        return [params, body]
+      #      else
+      #        Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
+      #      end
+      #    else
+      #      if token.type == :rsquare
+      #        consume
+      #        return [[], params]
+      #      else
+      #        Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
+      #      end
+      #    end
+      #  end
+      #end
 
       def where
         if token.type == :lround

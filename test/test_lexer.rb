@@ -8,7 +8,7 @@ class TestLexer < Test::Unit::TestCase
   context "The Lexer" do
     
     EXPRESSIONS.each_with_index do |expr, i|
-      lexer = PLang::VM::Lexer.new(EXPRESSIONS[i])
+      lexer = PLang::Parser::Lexer.new(EXPRESSIONS[i])
       should "tokenize the expression ##{i}" do
         assert_equal lexer.next_token.type, eval(TOKENS[i])
       end
