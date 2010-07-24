@@ -80,11 +80,12 @@ module PLang
       end
 
       def execute_list(elements, env)
-        e = []
-        elements.each do |element|
-          e << execute(element, env)
+        element = elements.delete_at(0)
+        if element
+          PObject.new(:list, [execute(element, env), execute_list(elements, env)])
+        else
+          PObject.new(:empty, [])
         end
-        PObject.new(:list, e)
       end
     end
   end
