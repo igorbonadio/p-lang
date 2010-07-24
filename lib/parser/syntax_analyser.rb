@@ -80,7 +80,7 @@ module PLang
         else
           w = []
         end
-        if token.type == :comma
+        if token.type == :semicolon
           consume_and_skip_breaks
           return Node.new(:lambda, {:params => params, :body => body, :where => w, :next_lambda => plambda})
         else
@@ -131,13 +131,16 @@ module PLang
             consume_and_skip_breaks
             if token.type == :colon
               consume_and_skip_breaks
-              ast = Node.new(:object, {:id => id.value, :params => expr_list})
+              ast = Node.new(:object, {:id => Node.new(:id, {:value => id.value}), :params => expr_list})
               if token.type == :rcurly
                 consume_and_skip_breaks
                 return ast
               else
                 Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '}'")
               end
+            elsif token.type == :rcurly
+              consume_and_skip_breaks
+              ast = Node.new(:object, {:id => Node.new(:id, {:value => id.value}), :params => []})
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ':'")
             end

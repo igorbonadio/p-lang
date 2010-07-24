@@ -18,7 +18,7 @@
 not ((1>2) and (1<2))
 list(1,2,3+4)
 begin(x=1, y=x+1)
-fib = [1|1], [2|1], [n| fib(n-1) + fib(n-2)]
+fib = [1|1]; [2|1]; [n| fib(n-1) + fib(n-2)]
 fib(10)
 x->aaa()
 f()->aaa()
@@ -26,3 +26,46 @@ f = [12+n] : (n=123)
 {aaaa: 1,2,3}
 {aaaa: 1,2,3}->aaaa()
 {aaaa: 1,2,3}->aaaa() + f(1,2,3) - 1->next()
+{obj: x, 2, {other}}
+"teste"
+'a'
+if(x>1, "verdadeiro", "falso")
+begin(1+2+3, "oi", 2<3, 'a')
+sin(2*pi)-cos(2*pi)
+f()
+x = 1
+x = 1+2+3+4
+y = 1+2*x/2
+str = "string"
+p1 = point(1,2)
+{obj: x} = {obj: 1}
+{obj: x, t} = obj
+[x|x]
+[x,y| x+y]
+[1, 2, x, {obj: x, y}| 1]
+[x| y] : (y = [x| x+6])
+[x| y] : (y = [x| x+6], z = [x| x-6])
+x = [1]
+point = [x, y| {point: x, y}]
+point_x = [{point: x, y}| x]
+point_y = [{point: x, y}| y]
+point_sum = [{point: x1, y1}, {point: x2, y2}| {point: x1+x2, y1+y2}]
+sum = [ a, b| a + b]
+f = [x| begin(algo=x, algo*algo, algo)]
+f = [x| f(x) + g(x)] : (f = [x| x*x], g = [x| x/2])
+f = [x| y] : (y = 2*x)
+p->x
+p->x(1)
+p->x()
+f(1)->algo(1)
+x->algo()
+10->algo(1,2,3)
+{algo: 1, 2} -> algo()
+{algo: x, y} -> x()
+{point: x, y} -> x = [x|x]
+{aaaa: x, y}->a = [x] : (x = 1)
+{aaaa: x, y} -> algo = [x| y] : (y = [x| x+6])
+{algo: x, y}->algo = [x| x]
+{algo} -> algo = 1
+true
+false

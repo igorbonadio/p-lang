@@ -47,6 +47,9 @@ module PLang
               when ','
                  send_token(:comma, ',')
                 @i += 1
+              when ';'
+                 send_token(:semicolon, ';')
+                @i += 1
               when '|'
                  send_token(:pipe, '|')
                 @i += 1
