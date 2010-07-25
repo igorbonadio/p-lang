@@ -24,6 +24,8 @@ module PLang
             execute_list(ast.elements, env)
           when :lambda
             execute_lambda(ast.params, ast.body, ast.where, ast.next_lambda, env)
+          when :call
+            execute_call(ast.lambda, ast.params, env)
           when :let
             execute_let(ast.lhs, ast.rhs, env)
           when :id
@@ -54,13 +56,43 @@ module PLang
 
       def execute_lambda(params, body, where, next_lambda, env)
         lambda = []
-        lambda << Proc.new do |values|
-          #TODO: lambda!
+        lambda << PLambda.new do |values|
+          new_env = Environment.new
+          new_env.parent = env
+          values.each_with_index do |value, i|
+            case params[i].type
+              when :id
+                new_env.set_var(params[i].value, value)
+              when :object
+                new_env.set_object_var(params[i], value)
+            end
+          end
+          execute(body, new_env)
+        end
+        params.each do |param|
+          case param.type
+            when :id
+              lambda[0].form <<  nil
+            else
+              lambda[0].form << param
+          end
         end
         if next_lambda
           lambda |= execute(next_lambda, env).params
         end
         PObject.new(:lambda, lambda)
+      end
+      
+      def execute_call(lambda, params, env)
+        values = []
+        params.each do |param|
+          values << execute(param, env)
+        end
+        lambda = execute(lambda, env)
+        lambda.params.each do |lamb|
+          return lamb.call(values) if lamb.call?(values)
+        end
+        raise "TODO: call error"
       end
 
       def execute_let(lhs, rhs, env)
