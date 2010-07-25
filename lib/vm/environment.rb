@@ -30,10 +30,15 @@ module PLang
         if form.type == :object
           if form.id.value == object.id
             form.params.each_with_index do |param, i|
-              if param.type == :object
-                set_object_var(param, object.params[i])
-              else
-                set_var(param.value, object.params[i])
+              case param.type 
+                when :object
+                  set_object_var(param, object.params[i])
+                when :id
+                  set_var(param.value, object.params[i])
+                else
+                  unless param.value == object.params[i].params[0]
+                    raise "TODO: Environment#set_object_var#3"
+                  end
               end
             end
           else

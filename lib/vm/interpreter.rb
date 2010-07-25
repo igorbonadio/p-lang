@@ -96,8 +96,12 @@ module PLang
       end
 
       def execute_let(lhs, rhs, env)
-        p lhs
-        env.set_var(lhs.value, execute(rhs, env))
+        case lhs.type
+          when :id
+            env.set_var(lhs.value, execute(rhs, env))
+          when :object
+            env.set_object_var(lhs, execute(rhs, env))
+        end
       end
 
       def execute_id(id, env)
