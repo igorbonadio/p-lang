@@ -96,6 +96,7 @@ module PLang
       end
 
       def execute_let(lhs, rhs, env)
+        p lhs
         env.set_var(lhs.value, execute(rhs, env))
       end
 
