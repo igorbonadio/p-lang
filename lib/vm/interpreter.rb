@@ -67,9 +67,11 @@ module PLang
                 new_env.set_object_var(params[i], value)
             end
           end
+          where.each do |w|
+            execute(w, new_env)
+          end
           execute(body, new_env)
         end
-        p where
         params.each do |param|
           case param.type
             when :id
