@@ -15,6 +15,7 @@ module PLang
       private
 
       def execute(ast, env)
+        p ast
         case ast.type
           when :integer, :decimal, :string, :char, :boolean
             execute_literal(ast.type, ast.value, env)
@@ -26,6 +27,8 @@ module PLang
             execute_lambda(ast.params, ast.body, ast.where, ast.next_lambda, env)
           when :call
             execute_call(ast.lambda, ast.params, env)
+          when :object_message
+            execute_object_message(ast.object, ast.message, env)
           when :let
             execute_let(ast.lhs, ast.rhs, env)
           when :id
@@ -126,6 +129,11 @@ module PLang
         else
           PObject.new(:empty, [])
         end
+      end
+      
+      def execute_object_message(object, message, env)
+        object = execute(object, env)
+        env.get_object_message(object.id, message.value)
       end
     end
   end
