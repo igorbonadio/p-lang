@@ -69,6 +69,7 @@ module PLang
           end
           execute(body, new_env)
         end
+        p where
         params.each do |param|
           case param.type
             when :id
