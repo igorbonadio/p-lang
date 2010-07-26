@@ -49,7 +49,17 @@ module PLang
                 when :object
                   set_object_var(param, object.params[i])
                 when :id
-                  set_var(param.value, object.params[i])
+                  if object.id == :integer
+                    set_var(param.value, PObject.new(:integer, [object.params[i]]))
+                  elsif object.id == :decimal
+                    set_var(param.value, PObject.new(:decimal, [object.params[i]]))
+                  elsif object.id == :char
+                    set_var(param.value, PObject.new(:char, [object.params[i]]))
+                  elsif object.id == :string
+                    set_var(param.value, PObject.new(:string, [object.params[i]]))
+                  else
+                    set_var(param.value, object.params[i])
+                  end
                 else
                   unless param.value == object.params[i].params[0]
                     raise "TODO: Environment#set_object_var#3"
