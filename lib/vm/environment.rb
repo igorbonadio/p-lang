@@ -27,6 +27,20 @@ module PLang
         end
       end
       
+      #TODO: new operator to add lambdas
+      def add_lambda(id, lamb)
+        v = get_var(id)
+        if v
+          if v.id == :lambda
+            v.params |= lamb.params
+          else
+            raise "TODO: Environment#add_lambda#2"
+          end
+        else
+          raise "TODO: Environment#add_lambda#1"
+        end
+      end
+      
       def set_object_var(form, object)
         if form.type == :object
           if form.id.value == object.id
@@ -47,22 +61,6 @@ module PLang
           end
         else
           raise "TODO: Environment#set_object_var#2"
-        end
-      end
-      
-      def set_object_message(object, message, value)
-        @objects[object] = Hash.new unless @objects[object]
-        @objects[object][message] = value
-      end
-      
-      def get_object_message(object, message)
-        v = @objects[object][message] if @objects[object]
-        if v
-          return v
-        elsif @parent
-          return @parent.get_object_message(object, message)
-        else
-          raise "TODO: Environment#get_var#4"
         end
       end
     end

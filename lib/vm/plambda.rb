@@ -2,7 +2,7 @@ module PLang
   module VM
     class PLambda < Proc
       def call?(params)
-        _call?(params, @form)
+        _call?(params, @form||[])
       end
       
       def _call?(params, form)
@@ -20,7 +20,9 @@ module PLang
                   unless f.id.value == params[i].id
                     return false
                   else
-                    return _call?(params[i].params, f.params)
+                    unless _call?(params[i].params, f.params)
+                      return false
+                    end
                   end
               end
             end

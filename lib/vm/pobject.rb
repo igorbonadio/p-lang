@@ -2,7 +2,7 @@ module PLang
   module VM
     class PObject
       attr_reader :id
-      attr_reader :params
+      attr_accessor :params
 
       def initialize(id, params)
         @id = id

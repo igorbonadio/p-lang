@@ -15,7 +15,6 @@ module PLang
       private
 
       def execute(ast, env)
-        p ast
         case ast.type
           when :integer, :decimal, :string, :char, :boolean
             execute_literal(ast.type, ast.value, env)
@@ -107,9 +106,17 @@ module PLang
             env.set_var(lhs.value, execute(rhs, env))
           when :object
             env.set_object_var(lhs, execute(rhs, env))
+          when :object_message
+            params = [lhs.object, PLang::Parser::Node.new(:object, {:id => PLang::Parser::Node.new(:id, {:value => lhs.message.value}), :params => []})]
+            lamb = execute_lambda(params, rhs, [], nil, env)
+            begin
+              env.set_var(:get_object_message, lamb)
+            rescue
+              env.add_lambda(:get_object_message, lamb)
+            end
         end
       end
-
+      
       def execute_id(id, env)
         env.get_var(id)
       end
@@ -132,8 +139,9 @@ module PLang
       end
       
       def execute_object_message(object, message, env)
-        object = execute(object, env)
-        env.get_object_message(object.id, message.value)
+        get_object_message = PLang::Parser::Node.new(:id, {:value => :get_object_message})
+        message = PLang::Parser::Node.new(:object, {:id => PLang::Parser::Node.new(:id, {:value => message.value}), :params => []})
+        execute_call(get_object_message, [object, message], env)
       end
     end
   end

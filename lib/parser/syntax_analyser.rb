@@ -66,9 +66,13 @@ module PLang
             end
           else
             if token.type == :rsquare
+              if params.length == 1
+                body = params[0]
+                params = []
+              else
+                Error.syntax_error(token.line, token.src, token.i, "invalid function body")
+              end
               consume
-              body = params
-              params = []
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ']'")
             end
