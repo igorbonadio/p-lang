@@ -1,6 +1,7 @@
 module PLang
   module VM
     class PLambda < Proc
+            
       def call?(params)
         _call?(params, @form||[])
       end

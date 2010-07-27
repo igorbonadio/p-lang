@@ -6,13 +6,22 @@ module PLang
       end
 
       def execute!
-        env = Environment.new
+        env = load_basic_environment
         @ast.each do |ast|
           p execute(ast, env)
         end
       end
 
       private
+      
+      def load_basic_environment
+        @env = Environment.new
+        libraries = methods.grep /^add_to_interpreter/
+        libraries.each do |library|
+          send(library)
+        end
+        @env
+      end
 
       def execute(ast, env)
         case ast.type

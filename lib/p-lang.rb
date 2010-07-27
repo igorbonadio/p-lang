@@ -10,3 +10,9 @@ require File.join(ROOT_PATH, '/vm/interpreter')
 require File.join(ROOT_PATH, '/vm/pobject')
 require File.join(ROOT_PATH, '/vm/environment')
 require File.join(ROOT_PATH, '/vm/plambda')
+require File.join(ROOT_PATH, '/vm/pfunctions')
+
+module PLang
+  module VM
+  end
+end
