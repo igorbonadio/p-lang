@@ -6,13 +6,12 @@ require File.join(ROOT_PATH, '/parser/token')
 require File.join(ROOT_PATH, '/parser/syntax_analyser')
 require File.join(ROOT_PATH, '/parser/node')
 
+require File.join(ROOT_PATH, '/vm/pfunctions')
 require File.join(ROOT_PATH, '/vm/interpreter')
 require File.join(ROOT_PATH, '/vm/pobject')
 require File.join(ROOT_PATH, '/vm/environment')
 require File.join(ROOT_PATH, '/vm/plambda')
-require File.join(ROOT_PATH, '/vm/pfunctions')
 
-module PLang
-  module VM
-  end
-end
+require File.join(ROOT_PATH, '/vm/core/pinteger')
+require File.join(ROOT_PATH, '/vm/core/pboolean')
+require File.join(ROOT_PATH, '/vm/core/pdecimal')

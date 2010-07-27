@@ -23,7 +23,7 @@ module PLang
       end
       
       def object_message(object, message)
-        lamb = plambda(object, message) do |values|
+        lamb = plambda(object, "{#{message.to_s}}") do |values|
           yield(values[0], values[1])
         end
         begin

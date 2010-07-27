@@ -1,6 +1,8 @@
 module PLang
   module VM
     class Interpreter
+      include PFunctions
+      
       def initialize(ast)
         @ast = ast
       end
@@ -24,26 +26,44 @@ module PLang
       end
 
       def execute(ast, env)
-        case ast.type
-          when :integer, :decimal, :string, :char, :boolean
-            execute_literal(ast.type, ast.value, env)
-          when :object
-            execute_object(ast.id, ast.params, env)
-          when :list
-            execute_list(ast.elements, env)
-          when :lambda
-            execute_lambda(ast.params, ast.body, ast.where, ast.next_lambda, env)
-          when :call
-            execute_call(ast.lambda, ast.params, env)
-          when :object_message
-            execute_object_message(ast.object, ast.message, env)
-          when :let
-            execute_let(ast.lhs, ast.rhs, env)
-          when :id
-            execute_id(ast.value, env)
-          when :begin
-            execute_begin(ast.expressions, env)
+        if ast.class == PLang::Parser::Node
+          case ast.type
+            when :integer, :decimal, :string, :char, :boolean
+              execute_literal(ast.type, ast.value, env)
+            when :object
+              execute_object(ast.id, ast.params, env)
+            when :list
+              execute_list(ast.elements, env)
+            when :lambda
+              execute_lambda(ast.params, ast.body, ast.where, ast.next_lambda, env)
+            when :call
+              execute_call(ast.lambda, ast.params, env)
+            when :object_message
+              execute_object_message(ast.object, ast.message, env)
+            when :let
+              execute_let(ast.lhs, ast.rhs, env)
+            when :id
+              execute_id(ast.value, env)
+            when :begin
+              execute_begin(ast.expressions, env)
+            when :add, :sub, :mul, :div, :equal, :diff, :major, :major_equal, :minor, :minor_equal
+              execute_binop(ast.type, ast.lhs, ast.rhs, env)
+            when :and, :or
+              execute_binop("_#{ast.type}".to_sym, ast.lhs, ast.rhs, env)
+            when :not
+              execute_unop("_#{ast.type}".to_sym, ast.lhs, env)
+          end
+        else
+          ast
         end
+      end
+      
+      def execute_binop(type, lhs, rhs, env)
+        execute_call(execute_object_message(lhs,PLang::Parser::Node.new(:id, {:value => type}), env), [rhs], env)
+      end
+      
+      def execute_unop(type, lhs, env)
+        execute_call(execute_object_message(lhs,PLang::Parser::Node.new(:id, {:value => type}), env), [], env)
       end
 
       def execute_literal(type, value, env)
