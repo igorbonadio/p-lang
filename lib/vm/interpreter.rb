@@ -8,10 +8,12 @@ module PLang
       end
 
       def execute!
+        result = nil
         env = load_basic_environment
         @ast.each do |ast|
-          p execute(ast, env)
+          result = execute(ast, env)
         end
+        result
       end
 
       private
