@@ -15,7 +15,12 @@ options = OptionParser.new do|opts|
   end
 
   opts.on("-i", "-i FILE", "interp a script file.") do |file|
-    program = File.readlines(file).join("")
+    begin
+      program = File.readlines(file).join("")
+    rescue
+      puts "No such file (LoadError)"
+      exit
+    end
     sa = PLang::Parser::SyntaxAnalyser.new program
     vm = PLang::VM::Interpreter.new(sa.parse)
     vm.execute!
