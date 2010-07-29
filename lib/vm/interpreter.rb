@@ -36,6 +36,8 @@ module PLang
               execute_object(ast.id, ast.params, env)
             when :list
               execute_list(ast.elements, env)
+            when :if
+              execute_if(ast.condition, ast.true_expr, ast.false_expr, env)
             when :lambda
               execute_lambda(ast.params, ast.body, ast.where, ast.next_lambda, env)
             when :call
@@ -57,6 +59,19 @@ module PLang
           end
         else
           ast
+        end
+      end
+
+      def execute_if(cond, true_expr, false_expr, env)
+        cond = execute(cond, env)
+        if cond.id == :boolean
+          if cond.params[0] == :true
+            execute(true_expr, env)
+          else
+            execute(false_expr, env)
+          end
+        else
+          raise "TODO: if error"
         end
       end
       

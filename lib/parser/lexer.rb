@@ -114,7 +114,7 @@ module PLang
         end
         token = token.to_sym
         case token
-          when :and, :or, :not, :true, :false, :nil, :begin #, :list
+          when :and, :or, :not, :true, :false, :nil, :begin, :if
              send_token(token, token)
           else
              send_token(:id, token)

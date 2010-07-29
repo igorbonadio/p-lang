@@ -29,7 +29,7 @@
 [[:object,[:id, :obj],[[:id, :x], [:integer, 2], [:object, [:id, :other], []]]]]
 [[:string, "teste"]]
 [[:char, "a"]]
-[[:call,[:id, :if],[[:major, [:id, :x], [:integer, 1]],[:string, "verdadeiro"],[:string, "falso"]]]]
+[[:if,[:major, [:id, :x], [:integer, 1]],[:string, "verdadeiro"],[:string, "falso"]]]
 [[:begin,[[:add, [:add, [:integer, 1], [:integer, 2]], [:integer, 3]],[:string, "oi"],[:minor, [:integer, 2], [:integer, 3]],[:char, "a"]]]]
 [[:sub,[:call, [:id, :sin], [[:mul, [:integer, 2], [:id, :pi]]]],[:call, [:id, :cos], [[:mul, [:integer, 2], [:id, :pi]]]]]]
 [[:call, [:id, :f], []]]

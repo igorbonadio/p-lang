@@ -34,6 +34,8 @@ module PLang
           ast = pbegin
         elsif token.type == :list
           ast = plist
+        elsif token.type == :if
+          ast = pif
         elsif token.type == :not
           ast = pnot
         elsif ast = element
@@ -187,6 +189,36 @@ module PLang
               return Node.new(:begin, {:expressions => e})
             else
               Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
+            end
+          else
+            Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '('")
+          end
+        end
+      end
+
+      def pif
+        if token.type == :if
+          consume
+          if token.type == :lround
+            consume_and_skip_breaks
+            cond = expr
+            if token.type == :comma
+              consume_and_skip_breaks
+              true_expr = expr
+              if token.type == :comma
+                consume_and_skip_breaks
+                false_expr = expr
+                if token.type == :rround
+                  consume_and_skip_breaks
+                  return Node.new(:if, {:condition=>cond, :true_expr => true_expr, :false_expr => false_expr})
+                else
+                  Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ')'")
+                end
+              else
+                Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ','")
+              end
+            else
+              Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting ','")
             end
           else
             Error.syntax_error(token.line, token.src, token.i, "unexpected '#{token.value}', expecting '('")
