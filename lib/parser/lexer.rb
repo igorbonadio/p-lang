@@ -114,7 +114,7 @@ module PLang
         end
         token = token.to_sym
         case token
-          when :and, :or, :not, :true, :false, :nil, :list, :begin
+          when :and, :or, :not, :true, :false, :nil, :begin #, :list
              send_token(token, token)
           else
              send_token(:id, token)
@@ -153,10 +153,16 @@ module PLang
 
       def char
         unless @src[@i+2] == "'"
-          Error.syntax_error(@line, @src, @i, "unclosed character literal")
+          if @src[@i+1] == "("
+            send_token(:list, :list)
+            @i+1
+          else
+            Error.syntax_error(@line, @src, @i, "unclosed character literal")
+          end
+        else
+          send_token(:char, @src[@i+1])
+          @i+3
         end
-         send_token(:char, @src[@i+1])
-        @i+3
       end
 
       def string
