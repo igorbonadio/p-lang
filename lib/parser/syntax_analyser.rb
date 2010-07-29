@@ -159,6 +159,10 @@ module PLang
           consume
           if token.type == :lround
             consume_and_skip_breaks
+            if token.type == :rround
+              consume_and_skip_breaks
+              return Node.new(:list, {:elements => []})
+            end
             e = expr_list
             if token.type == :rround
               consume_and_skip_breaks
