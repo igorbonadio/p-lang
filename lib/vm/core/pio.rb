@@ -8,7 +8,7 @@ module PLang
         end)
 
         var :read, (plambda do
-          STDIN.gets
+          PObject.new(:string, [STDIN.gets])
         end)
       end
     end

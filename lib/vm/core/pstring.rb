@@ -15,9 +15,21 @@ module PLang
           end
         end
         
-        object_message "x", :to_s do |object|
+        object_message "x", :to_string do |object|
           plambda do |value|
             PObject.new(:string, [object.to_s])
+          end
+        end
+
+        object_message "{string: x}", :to_integer do |object|
+          plambda do |value|
+            PObject.new(:integer, [object.params[0].to_i])
+          end
+        end
+
+        object_message "{string: x}", :to_decimal do |object|
+          plambda do |value|
+            PObject.new(:decimal, [object.params[0].to_f])
           end
         end
         
