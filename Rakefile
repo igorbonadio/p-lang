@@ -10,7 +10,6 @@ begin
     gem.email = "igorbonadio@gmail.com"
     gem.homepage = "http://github.com/igorbonadio/p-lang"
     gem.authors = ["Igor Bonadio"]
-    gem.add_dependency "treetop", ">= 0"
     gem.add_development_dependency "shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

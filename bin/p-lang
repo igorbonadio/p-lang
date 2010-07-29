@@ -21,10 +21,25 @@ options = OptionParser.new do|opts|
       puts "No such file (LoadError)"
       exit
     end
-    sa = PLang::Parser::SyntaxAnalyser.new program
-    vm = PLang::VM::Interpreter.new(sa.parse)
-    vm.execute!
+    begin
+      sa = PLang::Parser::SyntaxAnalyser.new program
+      vm = PLang::VM::Interpreter.new(sa.parse)
+      vm.execute!
+    rescue Exception => e
+      puts "#{file}:#{e}"
+    end
   end
 end
 
-options.parse(ARGV)
+argv = ARGV
+begin
+  if ARGV.length > 0
+    if options.parse!(ARGV).length > 0
+      options.parse!(["-h"])
+    end
+  else
+    options.parse!(["-h"])
+  end
+rescue
+  puts "p-lang: unrecognized option"
+end
