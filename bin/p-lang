@@ -1,17 +1,25 @@
 #!/usr/bin/env ruby
 
+require 'optparse'
+
 require File.join(File.expand_path(File.dirname(__FILE__)), '/../lib/p-lang')
 
-if ARGV[0]
-  @parser = PLangParser.new
-  
-  ast = @parser.parse(File.readlines(ARGV[0]).join(""))
+options = OptionParser.new do|opts|
+  opts.banner = "Usage: p-lang [option]"
+  opts.version = "0.2.0"
 
-  if ast
-    vm = PLang::VM.new(ast.build.collect(&:to_sexp))
-    
+  opts.on("-e", "-e 'COMMAND'", "interp one line of script.") do |command|
+    sa = PLang::Parser::SyntaxAnalyser.new(command)
+    vm = PLang::VM::Interpreter.new(sa.parse)
     vm.execute!
-  else
-    puts @parser.failure_reason
+  end
+
+  opts.on("-i", "-i FILE", "interp a script file.") do |file|
+    program = File.readlines(file).join("")
+    sa = PLang::Parser::SyntaxAnalyser.new program
+    vm = PLang::VM::Interpreter.new(sa.parse)
+    vm.execute!
   end
 end
+
+options.parse(ARGV)
