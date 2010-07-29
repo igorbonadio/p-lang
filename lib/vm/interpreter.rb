@@ -154,7 +154,16 @@ module PLang
             if lhs.value == :_
               raise "WildCardError"
             else
-              env.set_var(lhs.value, execute(rhs, env))
+              begin
+                env.set_var(lhs.value, execute(rhs, env))
+              rescue Exception => e
+                var = env.get_var(lhs.value)
+                if var.id == :lambda
+                  env.add_lambda(lhs.value, execute(rhs, env))
+                else
+                  raise e
+                end
+              end
             end
           when :object
             env.set_object_var(lhs, execute(rhs, env))

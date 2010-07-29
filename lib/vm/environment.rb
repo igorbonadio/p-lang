@@ -31,7 +31,7 @@ module PLang
       def add_lambda(id, lamb)
         v = get_var(id)
         if v
-          if v.id == :lambda
+          if v.id == :lambda and lamb.id == :lambda
             v.params |= lamb.params
           else
             raise "TODO: Environment#add_lambda#2"
