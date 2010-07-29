@@ -17,7 +17,7 @@ module PLang
         
         object_message "x", :to_s do |object|
           plambda do |value|
-            PObject.new(:string, [object.params[0].to_s])
+            PObject.new(:string, [object.to_s])
           end
         end
         

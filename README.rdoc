@@ -32,6 +32,12 @@ And more functions:
   
   f(1) # => 3.14
 
+Wildcards
+
+  f = [1, _, x| x*2]
+  
+  f(1,'aaaaa', 10) # => 20
+
 Lists:
 
   x = '(1,2,3,4)
@@ -61,7 +67,7 @@ IO:
 
 == Requirements
 
-* Ruby 1.9.1
+* Ruby 1.9
 
 == Install
 

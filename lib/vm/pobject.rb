@@ -13,6 +13,23 @@ module PLang
         case @id
           when :integer, :decimal, :char, :string, :boolean
             return params[0]
+          when :empty
+            return "'()"
+          when :list
+            str = "'("
+            params = @params
+            ok = false
+            while params and params != []
+              str += "#{params[0].to_s}, "
+              params = params[1].params
+              ok = true
+            end
+            if ok
+              str[-2] = ')'
+            else
+              str += ')'
+            end
+            return str.strip
           else
             str = "{#{@id}"
             if @params.length > 0
@@ -21,11 +38,10 @@ module PLang
                 str += "#{param.to_s}, "
               end
               str[-2] = "}"
-              str
             else
               str += "}"
             end
-            str.strip
+            return str.strip
         end
       end
     end
