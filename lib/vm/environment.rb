@@ -12,7 +12,7 @@ module PLang
         unless @vars[id]
           @vars[id] = value
         else
-          raise "TODO: Environment"
+          raise "LetError: TODO"
         end
       end
 
@@ -23,7 +23,7 @@ module PLang
         elsif @parent
           return @parent.get_var(id)
         else
-          raise "TODO: Environment#get_var#3"
+          raise "NameError: undefined variable '#{id}'"
         end
       end
       
@@ -49,16 +49,18 @@ module PLang
                 when :object
                   set_object_var(param, object.params[i])
                 when :id
-                  if object.id == :integer
-                    set_var(param.value, PObject.new(:integer, [object.params[i]]))
-                  elsif object.id == :decimal
-                    set_var(param.value, PObject.new(:decimal, [object.params[i]]))
-                  elsif object.id == :char
-                    set_var(param.value, PObject.new(:char, [object.params[i]]))
-                  elsif object.id == :string
-                    set_var(param.value, PObject.new(:string, [object.params[i]]))
-                  else
-                    set_var(param.value, object.params[i])
+                  unless param.value == :_
+                    if object.id == :integer
+                      set_var(param.value, PObject.new(:integer, [object.params[i]]))
+                    elsif object.id == :decimal
+                      set_var(param.value, PObject.new(:decimal, [object.params[i]]))
+                    elsif object.id == :char
+                      set_var(param.value, PObject.new(:char, [object.params[i]]))
+                    elsif object.id == :string
+                      set_var(param.value, PObject.new(:string, [object.params[i]]))
+                    else
+                      set_var(param.value, object.params[i])
+                    end
                   end
                 else
                   unless param.value == object.params[i].params[0]

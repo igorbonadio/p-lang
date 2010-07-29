@@ -71,7 +71,7 @@ module PLang
             execute(false_expr, env)
           end
         else
-          raise "TODO: if error"
+          raise "IfError"
         end
       end
       
@@ -110,7 +110,9 @@ module PLang
           values.each_with_index do |value, i|
             case params[i].type
               when :id
-                new_env.set_var(params[i].value, value)
+                unless params[i].value == :_
+                  new_env.set_var(params[i].value, value)
+                end
               when :object
                 new_env.set_object_var(params[i], value)
             end
@@ -143,13 +145,17 @@ module PLang
         lambda.params.each do |lamb|
           return lamb.call(values) if lamb.call?(values)
         end
-        raise "TODO: call error"
+        raise "CallError"
       end
 
       def execute_let(lhs, rhs, env)
         case lhs.type
           when :id
-            env.set_var(lhs.value, execute(rhs, env))
+            if lhs.value == :_
+              raise "WildCardError"
+            else
+              env.set_var(lhs.value, execute(rhs, env))
+            end
           when :object
             env.set_object_var(lhs, execute(rhs, env))
           when :object_message
