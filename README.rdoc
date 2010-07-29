@@ -16,7 +16,19 @@ Functions:
         [2| 1];
         [n| fib(n-1) + fib(n-2)]
   
-  fib(10)
+  fib(10) # => 55
+
+And more functions:
+
+  f = [x| x*pi] : (pi = 3.14)
+  
+  f(1) # => 3.14
+
+Lists:
+
+  x = '(1,2,3,4)
+  x->head() # => 1
+  x->tail() # => '(2,3,4)
 
 Objects:
 
@@ -34,10 +46,14 @@ Messages:
   
   3->plus2() # => 5
 
+IO:
+
+  x = read() # <= 123
+  print(x) # => 123
+
 == Requirements
 
-* Ruby
-* Treetop
+* Ruby 1.9.1
 
 == Install
 
@@ -45,7 +61,7 @@ Messages:
 
 == Running
 
-  $ p-lang your-program.p
+  $ p-lang -i your-program.p
 
 == Note on Patches/Pull Requests
  
