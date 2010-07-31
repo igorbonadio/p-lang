@@ -12,7 +12,7 @@ module PLang
       def to_s
         case @id
           when :integer, :decimal, :char, :string, :boolean
-            return params[0]
+            return params[0].to_s
           when :empty
             return "'()"
           when :list
