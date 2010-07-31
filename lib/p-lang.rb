@@ -19,3 +19,6 @@ require File.join(ROOT_PATH, '/vm/core/pstring')
 require File.join(ROOT_PATH, '/vm/core/pchar')
 require File.join(ROOT_PATH, '/vm/core/plist')
 require File.join(ROOT_PATH, '/vm/core/pio')
+require File.join(ROOT_PATH, '/vm/core/miscellaneous')
+
+require File.join(ROOT_PATH, '/ips/shell.rb')

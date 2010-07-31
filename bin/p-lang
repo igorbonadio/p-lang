@@ -14,7 +14,12 @@ options = OptionParser.new do|opts|
     vm.execute!
   end
 
-  opts.on("-i", "-i FILE", "interp a script file.") do |file|
+  opts.on("-i", "-i", "interactive p shell.") do
+    shell = PLang::IPS::Shell.new
+    shell.start
+  end
+
+  opts.on("-f", "-f FILE", "interp a script file.") do |file|
     begin
       program = File.readlines(file).join("")
     rescue
@@ -35,10 +40,11 @@ argv = ARGV
 begin
   if ARGV.length > 0
     if options.parse!(ARGV).length > 0
-      options.parse!(["-h"])
+      options.parse!(["-f" + ARGV[0]])
     end
   else
-    options.parse!(["-h"])
+    # without arguments
+    options.parse!(["-i"])
   end
 rescue
   puts "p-lang: unrecognized option"

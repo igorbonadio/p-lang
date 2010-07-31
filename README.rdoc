@@ -75,7 +75,11 @@ IO:
 
 == Running
 
-  $ p-lang -i your-program.p
+  $ p-lang your-program.p
+
+== Interactive P Shell
+
+  $ p-lang
 
 == Note on Patches/Pull Requests
  
