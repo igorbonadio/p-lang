@@ -3,13 +3,13 @@ module PLang
     module PFunctions
       def add_to_interpreter_io_functions
         
-        var :print, (plambda "x" do |params|
+        def_function :print, "x" do |params|
           puts params[0].to_s
-        end)
+        end
 
-        var :read, (plambda do
+        def_function :read, do
           PObject.new(:string, [STDIN.gets])
-        end)
+        end
       end
     end
   end

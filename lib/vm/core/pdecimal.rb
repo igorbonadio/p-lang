@@ -3,7 +3,7 @@ module PLang
     module PFunctions
       def add_to_interpreter_decimal_functions
         
-        object_message "{decimal: x}", :add do |object|
+        def_object_message "{decimal: x}", :add do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -14,7 +14,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :sub do |object|
+        def_object_message "{decimal: x}", :sub do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -25,7 +25,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :mul do |object|
+        def_object_message "{decimal: x}", :mul do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -36,7 +36,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :div do |object|
+        def_object_message "{decimal: x}", :div do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -47,7 +47,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :mod do |object|
+        def_object_message "{decimal: x}", :mod do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -58,7 +58,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :major do |object|
+        def_object_message "{decimal: x}", :major do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -69,7 +69,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :major_equal do |object|
+        def_object_message "{decimal: x}", :major_equal do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -80,7 +80,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :minor do |object|
+        def_object_message "{decimal: x}", :minor do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -91,7 +91,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :minor_equal do |object|
+        def_object_message "{decimal: x}", :minor_equal do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -102,7 +102,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :equal do |object|
+        def_object_message "{decimal: x}", :equal do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
@@ -113,7 +113,7 @@ module PLang
           end
         end
         
-        object_message "{decimal: x}", :diff do |object|
+        def_object_message "{decimal: x}", :diff do |object|
           plambda "y" do |value|
             case value[0].id
               when :integer, :decimal
