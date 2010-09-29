@@ -27,3 +27,4 @@ x = '(1,2,3,4) x->concat(10)->tail()->head()
 sum = [{empty}| 0]; [x| x->head() + sum(x->tail())] x = '(1,2,3,4) sum(x)
 if(2>=2, 1, 2)
 if(2<2, 1, 2)
+{a: {empty}, x} = {a: '(), 1} x
