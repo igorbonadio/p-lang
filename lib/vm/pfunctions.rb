@@ -40,7 +40,7 @@ module PLang
           obj_params << param
         end
                 
-        PObject.new(:lambda, [lamb])
+        PObject.new(:lambda, [lamb, PObject.new(:empty, [])])
       end
       
       def object(expr)

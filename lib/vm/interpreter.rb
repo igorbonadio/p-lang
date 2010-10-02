@@ -131,7 +131,9 @@ module PLang
           end
         end
         if next_lambda
-          lambda |= execute(next_lambda, env).params
+          lambda << execute(next_lambda, env)
+        else
+          lambda << PObject.new(:empty, [])
         end
         PObject.new(:lambda, lambda)
       end
@@ -142,8 +144,15 @@ module PLang
           values << execute(param, env)
         end
         lambda = execute(lambda, env)
-        lambda.params.each do |lamb|
-          return lamb.call(values) if lamb.call?(values)
+        #lambda.params.each do |lamb|
+        #  return lamb.call(values) if lamb.call?(values)
+        #end
+        while lambda.id == :lambda
+          if lambda.params[0].call?(values)
+            return lambda.params[0].call(values)
+          else
+            lambda = lambda.params[1]
+          end
         end
         raise "CallError"
       end

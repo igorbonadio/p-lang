@@ -32,7 +32,10 @@ module PLang
         v = get_var(id)
         if v
           if v.id == :lambda and lamb.id == :lambda
-            v.params |= lamb.params
+            while v.params[1].id == :lambda
+              v = v.params[1]
+            end
+            v.params[1] = lamb
           else
             raise "TODO: Environment#add_lambda#2"
           end
