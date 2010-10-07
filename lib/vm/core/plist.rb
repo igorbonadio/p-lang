@@ -27,6 +27,28 @@ module PLang
           end
         end
 
+        def_object_message "{list: x, xs}", :length do |object|
+          plambda do |value|
+            if object.params[0] != :empty
+              i = 1
+              tail = object.params[1]
+              while tail.id != :empty
+                tail = tail.params[1]
+                i += 1
+              end
+              PObject.new(:integer, [i])
+            else
+              PObject.new(:integer, [0])
+            end
+          end
+        end
+
+        def_object_message "{empty}", :length do |object|
+          plambda do |value|
+            PObject.new(:integer, [0])
+          end
+        end
+
       end
     end
   end
