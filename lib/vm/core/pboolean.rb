@@ -20,6 +20,28 @@ module PLang
             PObject.new(:boolean, [(not object.params[0])])
           end
         end
+
+        def_object_message "{boolean: x}", :equal do |object|
+          plambda "y" do |value|
+            case value[0].id
+              when :boolean
+                PObject.new(:boolean, [(object.params[0] == value[0].params[0]).to_s.to_sym])
+              else
+                raise "TODO: boolean"
+            end
+          end
+        end
+        
+        def_object_message "{boolean: x}", :diff do |object|
+          plambda "y" do |value|
+            case value[0].id
+              when :boolean
+                PObject.new(:boolean, [(object.params[0] != value[0].params[0]).to_s.to_sym])
+              else
+                raise "TODO: integer"
+            end
+          end
+        end
         
       end
     end

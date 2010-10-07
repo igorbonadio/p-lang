@@ -32,6 +32,28 @@ module PLang
             PObject.new(:decimal, [object.params[0].to_f])
           end
         end
+
+        def_object_message "{string: x}", :equal do |object|
+          plambda "y" do |value|
+            case value[0].id
+              when :string
+                PObject.new(:boolean, [(object.params[0] == value[0].params[0]).to_s.to_sym])
+              else
+                raise "TODO: string"
+            end
+          end
+        end
+        
+        def_object_message "{string: x}", :diff do |object|
+          plambda "y" do |value|
+            case value[0].id
+              when :string
+                PObject.new(:boolean, [(object.params[0] != value[0].params[0]).to_s.to_sym])
+              else
+                raise "TODO: string"
+            end
+          end
+        end
         
       end
     end
